@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SmartPaywallResponse: Decodable {
+public struct SmartPaywallResponse: Decodable {
     let status: String
     let paywallId: Int
     let paywallName: String?
@@ -17,7 +17,7 @@ struct SmartPaywallResponse: Decodable {
     let paywallLang: String
     let paywallJson: GetPaywallResponse
     
-    enum CodingKeys: String, CodingKey {
+    public enum CodingKeys: String, CodingKey {
         case status
         case paywallId
         case paywallName
@@ -28,7 +28,7 @@ struct SmartPaywallResponse: Decodable {
         case paywallJson
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.status = try container.decode(String.self, forKey: .status)
         self.paywallId = try container.decode(Int.self, forKey: .paywallId)

@@ -20,14 +20,14 @@ public struct SmartPaywallParameters {
 }
 
 
-enum StoreKitError: Error {
+public enum StoreKitError: Error {
     case unknown
     case invalidProductIdentifier(productID: String)
     case userCancelled
     case paymentNotAllowed
     case productUnavailable
     
-    var code: Int {
+    public var code: Int {
         switch self {
         case .unknown:
             return 1000
@@ -42,7 +42,7 @@ enum StoreKitError: Error {
         }
     }
     
-    var description: String {
+    public var description: String {
         switch self {
         case .unknown:
             return "Bilinmeyen bir hata oluştu."
@@ -58,11 +58,11 @@ enum StoreKitError: Error {
     }
 }
 
-typealias Transaction = StoreKit.Transaction
-typealias OnOpenCompletion = (_ paywallId: Int, _ isABTest: Bool, _ abTestName: String) -> ()
-typealias notCloseCompletion = (_ placementID: Int, _ isABTest: Bool, _ errorText: String) -> ()
-typealias OnPurchaseSuccess = (_ purchaseTransactionId: String, _ paywallId: Int, _ productId: String, _ isABTest: Bool, _ abTestName: String) -> ()
-typealias OnPurchaseFailed = (_ paywallId: Int, _ isABTest: Bool, _ abTestName: String, _ productCode: String, _ errorCode: String, _ errorDetail: String) -> ()
+public typealias Transaction = StoreKit.Transaction
+public typealias OnOpenCompletion = (_ paywallId: Int, _ isABTest: Bool, _ abTestName: String) -> ()
+public typealias notCloseCompletion = (_ placementID: Int, _ isABTest: Bool, _ errorText: String) -> ()
+public typealias OnPurchaseSuccess = (_ purchaseTransactionId: String, _ paywallId: Int, _ productId: String, _ isABTest: Bool, _ abTestName: String) -> ()
+public typealias OnPurchaseFailed = (_ paywallId: Int, _ isABTest: Bool, _ abTestName: String, _ productCode: String, _ errorCode: String, _ errorDetail: String) -> ()
 
 
 public class PaywallService {
@@ -75,18 +75,18 @@ public class PaywallService {
         self.network = network
     }
     
-    private var products: [Product] = []
+    public var products: [Product] = []
     
     @Published private(set) var isPremiumSubscriber: Bool = false
     private weak var currentPaywallController: (any ControllerType)?
     
-    func initialize() async {
+    public func initialize() async {
         await startObservingTransactions()
         await fetchProducts()
         await updateSubscriptionStatus()
     }
     
-    func fetchProducts() async {
+    public func fetchProducts() async {
         do {
             let newProducts = try await Product.products(for: productIDs).sorted(by: {$0.price > $1.price })
             DispatchQueue.main.async {
@@ -99,7 +99,7 @@ public class PaywallService {
     }
     
     /// Apple'dan gelen kullanıcı durumunu içerir
-    func checkUser(completion: @escaping (_ isPremium: Bool, _ transactionId: String) -> ()) {
+    public func checkUser(completion: @escaping (_ isPremium: Bool, _ transactionId: String) -> ()) {
         Task.detached {
             do {
                 var transactionId: String? = nil
@@ -134,7 +134,7 @@ public class PaywallService {
         }
     }
     
-    func makePurchase(productID: String,
+    public func makePurchase(productID: String,
                       onPurchaseSuccess: @escaping (_ purchaseTransactionId: String, _ productId: String) -> (),
                       onPurchaseFailed: @escaping (_ productCode: String, _ errorCode: String, _ errorDetail: String) -> ()) async throws -> Transaction {
         guard let product = products.first(where: { $0.id == productID }) else {
@@ -188,7 +188,7 @@ public class PaywallService {
             throw error
         }
     }
-    func startObservingTransactions() async {
+    public func startObservingTransactions() async {
         Task.detached {
             for await result in Transaction.updates {
                 switch result {
@@ -203,7 +203,7 @@ public class PaywallService {
         }
     }
     
-    func updateSubscriptionStatus() async {
+    public func updateSubscriptionStatus() async {
         do {
             for await result in Transaction.currentEntitlements {
                 let transaction = try checkVerified(result)
@@ -219,7 +219,7 @@ public class PaywallService {
         }
     }
     
-    func checkVerified<T>(_ result: VerificationResult<T>) throws -> T {
+    public func checkVerified<T>(_ result: VerificationResult<T>) throws -> T {
         switch result {
         case .unverified:
             throw StoreKitError.unknown
@@ -228,7 +228,7 @@ public class PaywallService {
         }
     }
     
-    func restorePurchases(completion: @escaping () -> ()) {
+    public func restorePurchases(completion: @escaping () -> ()) {
         Task {
             do {
                 try await AppStore.sync()
@@ -261,7 +261,7 @@ public class PaywallService {
         }
     }
     
-    func openPaywall(
+    public func openPaywall(
         parameters: SmartPaywallParameters,
         view: UIViewController,
         onOpen: @escaping OnOpenCompletion,
@@ -301,7 +301,7 @@ public class PaywallService {
     }
 }
 
-private extension PaywallService {
+public extension PaywallService {
     func fetchPaywall(
         parameters: SmartPaywallParameters,
         completion: @escaping (Result<SmartPaywallResponse, NetworkError>) -> Void

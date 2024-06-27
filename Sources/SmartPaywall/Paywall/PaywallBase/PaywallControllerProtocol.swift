@@ -7,10 +7,10 @@
 
 import UIKit
 
-typealias ControllerType = UIViewController & PaywallControllerProtocol
+public typealias ControllerType = UIViewController & PaywallControllerProtocol
 
 /// Oluşturulacak tüm paywall ' ların controller ' ları bu protocol ' den miras almalı
-protocol PaywallControllerProtocol {
+public protocol PaywallControllerProtocol {
     /// Paywall açıldığında tetiklencek.
     var onOpen: (() -> ())? { get set }
     var onClose: (() -> ())? { get set }
