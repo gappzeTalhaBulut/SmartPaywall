@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol NetworkEndpointConfiguration {
+public protocol NetworkEndpointConfiguration {
     var method: HTTPMethodType { get }
     var path: String { get }
     var headers: [String: String] { get }

@@ -66,14 +66,13 @@ typealias OnPurchaseFailed = (_ paywallId: Int, _ isABTest: Bool, _ abTestName: 
 
 
 public class PaywallService {
-    static let shared = PaywallService(productIDs: [""])
     private let productIDs: Set<String>
     private let network: NetworkProtocol
     
-    private init(network: NetworkProtocol = NetworkService(),
-                 productIDs: Set<String>) {
-        self.network = network
+    public init(productIDs: Set<String>,
+                network: NetworkProtocol = NetworkService()) {
         self.productIDs = productIDs
+        self.network = network
     }
     
     private var products: [Product] = []

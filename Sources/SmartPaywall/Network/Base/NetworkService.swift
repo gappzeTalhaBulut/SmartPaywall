@@ -7,19 +7,19 @@
 
 import Foundation
 
-protocol NetworkProtocol {
+public protocol NetworkProtocol {
     func request<T: Decodable>(route: NetworkEndpointConfiguration,
                                result: @escaping (Result<T, NetworkError>) -> Void)
 }
 
-final class NetworkService: NetworkProtocol {
-    private let isLoggingEnabled: Bool
+public class NetworkService: NetworkProtocol {
+    public let isLoggingEnabled: Bool
     
-    init(isLoggingEnabled: Bool = true) {
+    public init(isLoggingEnabled: Bool = true) {
         self.isLoggingEnabled = isLoggingEnabled
     }
     
-    func request<T: Decodable>(route: NetworkEndpointConfiguration,
+    public func request<T: Decodable>(route: NetworkEndpointConfiguration,
                                result: @escaping (Result<T, NetworkError>) -> Void) {
         guard let url = URL(string: route.path) else {
             result(.failure(.invalidUrl))
@@ -62,7 +62,7 @@ final class NetworkService: NetworkProtocol {
 }
 
 // MARK: Private Methods
-private extension NetworkService {
+public extension NetworkService {
     func logJSONResponse(data: Data) {
         if let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers),
            let jsonData = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) {
