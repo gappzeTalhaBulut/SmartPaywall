@@ -65,7 +65,7 @@ typealias OnPurchaseSuccess = (_ purchaseTransactionId: String, _ paywallId: Int
 typealias OnPurchaseFailed = (_ paywallId: Int, _ isABTest: Bool, _ abTestName: String, _ productCode: String, _ errorCode: String, _ errorDetail: String) -> ()
 
 
-final class PaywallService {
+public class PaywallService {
     static let shared = PaywallService(productIDs: [""])
     private let productIDs: Set<String>
     private let network: NetworkProtocol
