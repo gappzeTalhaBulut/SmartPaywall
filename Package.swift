@@ -24,7 +24,10 @@ let package = Package(
                 "Kingfisher",
                 "BaseFoundation"
             ],
-            path: "Sources/SmartPaywall"),
+            path: "Sources/SmartPaywall",
+            resources: [
+                .process("Sources/SmartPaywall/Paywall//Font/FontBook.xcassets")
+            ]),
         .testTarget(
             name: "SmartPaywallTests",
             dependencies: ["SmartPaywall"],
