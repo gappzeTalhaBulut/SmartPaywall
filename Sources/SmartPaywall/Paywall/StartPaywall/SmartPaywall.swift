@@ -53,25 +53,17 @@ public typealias OnPurchaseFailed = (_ paywallId: Int, _ isABTest: Bool, _ abTes
 public class PaywallService {
     public static let shared = PaywallService()
     
-    private var productIDs: Set<String>
-    private var network: NetworkProtocol
+    private var productIDs: Set<String> = []
+    private var network: NetworkProtocol = NetworkService()
     
-    private init(productIDs: Set<String> = [],
-                 network: NetworkProtocol = NetworkService()) {
-        self.productIDs = productIDs
-        self.network = network
-    }
+    private init() {}
     
     public var products: [Product] = []
     @Published private(set) var isPremiumSubscriber: Bool = false
     private weak var currentPaywallController: (any ControllerType)?
     
-    public static func configure(
-        productIDs: Set<String>,
-        network: NetworkProtocol = NetworkService()
-    ) {
+    public static func configure(productIDs: Set<String>) {
         shared.productIDs = productIDs
-        shared.network = network
     }
     
     public func initialize() async {
