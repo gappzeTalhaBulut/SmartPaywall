@@ -5,21 +5,6 @@ import AlertKit
 import StoreKit
 import Foundation
 
-public struct SmartPaywallParameters {
-    let placementId: Int
-    let action: String
-    let bundle: String
-    let uniqueId: String
-    let country: String
-    let language: String
-    let paywallVersion: String
-    let version: String
-    let isTest: Bool
-    let serviceURL: String
-    let serviceToken: String
-}
-
-
 public enum StoreKitError: Error {
     case unknown
     case invalidProductIdentifier(productID: String)
