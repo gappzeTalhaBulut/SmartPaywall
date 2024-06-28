@@ -19,7 +19,7 @@ struct SmartPaywallModel {
     let isTest: Bool
     
     init(placementId: Int,
-          action: AppPaywallAction,
+          action: String,
           uniqueId: String,
           bundle: String,
           country: String,
@@ -30,7 +30,7 @@ struct SmartPaywallModel {
         self.bundle = bundle
         self.uniqueId = uniqueId
         self.placementId = placementId
-        self.actionName = action.rawValue
+        self.actionName = action
         self.country = country
         self.language = language
         self.paywallVersion = paywallVersion

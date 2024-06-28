@@ -7,7 +7,7 @@ import Foundation
 
 public struct SmartPaywallParameters {
     let placementId: Int
-    let action: AppPaywallAction
+    let action: String
     let bundle: String
     let uniqueId: String
     let country: String
