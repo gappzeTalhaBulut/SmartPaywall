@@ -13,9 +13,15 @@ public class FontLoader {
         let bundle = Bundle.module
         
         let fontNames = [
-            "Montserrat-Italic",
-            "Montserrat",
-            "SF-Pro"
+            "MontserratRoman-Regular",
+            "MontserratRoman-Medium",
+            "MontserratRoman-SemiBold",
+            "MontserratRoman-Bold",
+            "MontserratRoman-ExtraBold",
+            "SFPro-Regular",
+            "SFPro-Medium",
+            "SFPro-Semibold",
+            "SFPro-Bold"
         ]
         
         for fontName in fontNames {
