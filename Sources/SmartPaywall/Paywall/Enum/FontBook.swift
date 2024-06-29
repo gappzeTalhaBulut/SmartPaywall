@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Fontbook: String, Decodable {
+enum FontBook: String, Decodable {
     
     // MARK: - Montserrat
     case montserratRegular = "MontserratRoman-Regular"
@@ -22,3 +22,4 @@ enum Fontbook: String, Decodable {
     case sfProSemibold = "SFPro-Semibold"
     case sfProBold = "SFPro-Bold"
 }
+

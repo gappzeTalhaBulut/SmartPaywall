@@ -29,9 +29,7 @@ let package = Package(
             ],
             path: "Sources/SmartPaywall",
             resources: [
-                .process("Font/Montserrat-Italic.ttf"),
-                .process("Font/Montserrat.ttf"),
-                .process("Font/SF-Pro.ttf")
+                .process("Fonts")
             ]
         ),
         .testTarget(
