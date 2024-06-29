@@ -28,7 +28,12 @@ let package = Package(
                 "BaseFoundation"
             ],
             path: "Sources/SmartPaywall",
-            resources: [.process("Font")]),
+            resources: [
+                .process("Font/Montserrat-Italic.ttf"),
+                .process("Font/Montserrat.ttf"),
+                .process("Font/SF-Pro.ttf")
+            ]
+        ),
         .testTarget(
             name: "SmartPaywallTests",
             dependencies: ["SmartPaywall"],
