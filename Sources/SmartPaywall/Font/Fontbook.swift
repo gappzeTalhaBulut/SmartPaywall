@@ -5,9 +5,9 @@
 //  Created by Talha on 29.06.2024.
 //
 
-import UIKit
+import Foundation
 
-enum FontBook: String, Decodable {
+enum Fontbook: String, Decodable {
     
     // MARK: - Montserrat
     case montserratRegular = "MontserratRoman-Regular"
