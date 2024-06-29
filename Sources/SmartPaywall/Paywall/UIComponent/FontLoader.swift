@@ -19,7 +19,7 @@ public class FontLoader {
         ]
         
         for fontName in fontNames {
-            guard let fontURL = bundle.url(forResource: fontName, withExtension: "otf"),
+            guard let fontURL = bundle.url(forResource: fontName, withExtension: "ttf"),
                   let fontDataProvider = CGDataProvider(url: fontURL as CFURL),
                   let font = CGFont(fontDataProvider) else {
                 print("Error loading font: \(fontName)")
