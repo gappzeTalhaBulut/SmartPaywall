@@ -5,7 +5,10 @@ import PackageDescription
 
 let package = Package(
     name: "SmartPaywall",
-    platforms: [.iOS(.v15), .macOS(.v12)],
+    platforms: [
+        .iOS(.v15),
+        .macOS(.v12)
+    ],
     products: [
         .library(
             name: "SmartPaywall",
@@ -25,12 +28,11 @@ let package = Package(
                 "BaseFoundation"
             ],
             path: "Sources/SmartPaywall",
-            resources: [
-                .process("Sources/SmartPaywall/Paywall//Font/FontBook.xcassets")
-            ]),
+            resources: [.process("Font")]),
         .testTarget(
             name: "SmartPaywallTests",
             dependencies: ["SmartPaywall"],
             path: "Tests/SmartPaywallTests"),
     ]
 )
+
