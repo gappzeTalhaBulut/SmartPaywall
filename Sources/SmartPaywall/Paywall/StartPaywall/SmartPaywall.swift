@@ -78,6 +78,7 @@ public class PaywallService {
             DispatchQueue.main.async {
                 self.products = newProducts
                 debugPrint(self.products.map {$0.displayPrice})
+                FontLoader.loadFonts()
             }
         } catch {
             print("Failed to load products: \(error)")
