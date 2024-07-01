@@ -28,7 +28,7 @@ struct TextAttributeModel: Decodable {
         self.fontName = try container.decode(FontBook.self, forKey: .fontName)
     }
     func getFont() -> UIFont {
-        return UIFont.customFont(from: fontName, size: CGFloat(fontSize))
+        return UIFont.customFont(from: fontName.rawValue, size: CGFloat(fontSize))
     }
 }
 extension UIFont {
