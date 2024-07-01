@@ -11,15 +11,15 @@ import CoreText
 public class FontLoader {
     public static func loadFonts() {
         let bundle = Bundle.module
-        
-        let fontNames = [
-            "SF-Pro",
-            "Montserrat",
-            "Montserrat-Italic",
+
+        let fontFiles = [
+            ("SF-Pro", "ttf"),
+            ("Montserrat-Italic", "ttf"),
+            ("Montserrat", "ttf")
         ]
         
-        for fontName in fontNames {
-            guard let fontURL = bundle.url(forResource: fontName, withExtension: "ttf"),
+        for (fontName, fontExtension) in fontFiles {
+            guard let fontURL = bundle.url(forResource: fontName, withExtension: fontExtension),
                   let fontDataProvider = CGDataProvider(url: fontURL as CFURL),
                   let font = CGFont(fontDataProvider) else {
                 print("Error loading font: \(fontName)")
@@ -35,4 +35,3 @@ public class FontLoader {
         }
     }
 }
-
