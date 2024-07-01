@@ -56,7 +56,9 @@ public class PaywallService {
     private var productIDs: Set<String> = []
     private var network: NetworkProtocol = NetworkService()
     
-    private init() {}
+    private init() {
+        FontLoader.loadFonts()
+    }
     
     public var products: [Product] = []
     @Published private(set) var isPremiumSubscriber: Bool = false
@@ -78,7 +80,6 @@ public class PaywallService {
             DispatchQueue.main.async {
                 self.products = newProducts
                 debugPrint(self.products.map {$0.displayPrice})
-                FontLoader.loadFonts()
             }
         } catch {
             print("Failed to load products: \(error)")
