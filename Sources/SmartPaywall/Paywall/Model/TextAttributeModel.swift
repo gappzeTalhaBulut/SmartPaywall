@@ -28,15 +28,11 @@ struct TextAttributeModel: Decodable {
         self.fontName = try container.decode(FontBook.self, forKey: .fontName)
     }
     func getFont() -> UIFont {
-        return UIFont.customFont(from: fontName, size: CGFloat(fontSize))
-    }
-}
-extension UIFont {
-    static func customFont(from fontBook: FontBook, size: CGFloat) -> UIFont {
-        if let font = UIFont(name: fontBook.rawValue, size: size) {
+        if let font = UIFont(name: fontName.rawValue, size: CGFloat(fontSize)) {
             return font
         } else {
-            return UIFont.systemFont(ofSize: size)
+            return UIFont.systemFont(ofSize: CGFloat(fontSize))
         }
     }
 }
+
