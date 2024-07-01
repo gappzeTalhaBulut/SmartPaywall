@@ -13,10 +13,11 @@ public class FontLoader {
         let bundle = Bundle.module
         
         let fontNames = [
-            "SFPro-Medium",
-            "SFPro-Regular",
-            "SFPro-Semibold",
-            "SFPro-Bold"
+            "SF-Pro",
+            "SF-Pro-Medium",
+            "SF-Pro-Regular",
+            "SF-Pro-Semibold",
+            "SF-Pro-Bold"
         ]
         
         for fontName in fontNames {
