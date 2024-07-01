@@ -13,15 +13,13 @@ public class FontLoader {
         let bundle = Bundle.module
         
         let fontNames = [
-            "SFPro",
-            "SFPro-Medium",
-            "SFPro-Regular",
-            "SFPro-Semibold",
-            "SFPro-Bold"
+            "SF-Pro",
+            "Montserrat",
+            "Montserrat-Italic",
         ]
         
         for fontName in fontNames {
-            guard let fontURL = bundle.url(forResource: fontName, withExtension: "otf"),
+            guard let fontURL = bundle.url(forResource: fontName, withExtension: "ttf"),
                   let fontDataProvider = CGDataProvider(url: fontURL as CFURL),
                   let font = CGFont(fontDataProvider) else {
                 print("Error loading font: \(fontName)")
