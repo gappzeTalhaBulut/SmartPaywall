@@ -56,9 +56,7 @@ public class PaywallService {
     private var productIDs: Set<String> = []
     private var network: NetworkProtocol = NetworkService()
     
-    private init() {
-        FontLoader.loadFonts()
-    }
+    private init() {}
     
     public var products: [Product] = []
     @Published private(set) var isPremiumSubscriber: Bool = false
