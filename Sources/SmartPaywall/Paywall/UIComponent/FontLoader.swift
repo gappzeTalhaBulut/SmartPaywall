@@ -34,6 +34,8 @@ extension UIFont {
 public class FontRegister {
     public static func loadFonts() {
         _ = UIFont.registerFont(bundle: .module, fontName: "SF-Pro", fontExtension: "ttf")
+        _ = UIFont.registerFont(bundle: .module, fontName: "SF-Pro-Bold", fontExtension: "ttf")
+        _ = UIFont.registerFont(bundle: .module, fontName: "SF-Pro-Semibold", fontExtension: "ttf")
         _ = UIFont.registerFont(bundle: .module, fontName: "Montserrat-Italic", fontExtension: "ttf")
         _ = UIFont.registerFont(bundle: .module, fontName: "Montserrat", fontExtension: "ttf")
     }
