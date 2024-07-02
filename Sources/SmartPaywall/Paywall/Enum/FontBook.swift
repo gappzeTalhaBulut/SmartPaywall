@@ -21,5 +21,20 @@ enum FontBook: String, Decodable {
     case sfProMedium = "SFPro-Medium"
     case sfProSemibold = "SFPro-Semibold"
     case sfProBold = "SFPro-Bold"
+    
+    var actualFontName: String {
+        switch self {
+        case .sfProRegular:
+            return "SFProDisplay-Regular"
+        case .sfProMedium:
+            return "SFProDisplay-Medium"
+        case .sfProSemibold:
+            return "SFProDisplay-Semibold"
+        case .sfProBold:
+            return "SFProDisplay-Bold"
+        default:
+            return self.rawValue
+        }
+    }
 }
 
