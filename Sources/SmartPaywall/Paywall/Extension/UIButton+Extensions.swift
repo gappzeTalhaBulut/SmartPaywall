@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIButton {
-    func addClickEffect() {
+   public func addClickEffect() {
         self.addTarget(self, action: #selector(clickAnimation), for: .touchUpInside)
     }
     
@@ -29,7 +29,7 @@ extension UIButton {
             })
         }
     }
-    func addHapticFeedback() {
+    public func addHapticFeedback() {
           addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
       }
 
