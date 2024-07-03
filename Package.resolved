@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gappzeTalhaBulut/BaseFoundation",
       "state" : {
-        "branch" : "main",
-        "revision" : "461cc8e85e036b8ff2b88596ed2077f1bc7c765d"
+        "revision" : "461cc8e85e036b8ff2b88596ed2077f1bc7c765d",
+        "version" : "1.0.0"
       }
     },
     {
