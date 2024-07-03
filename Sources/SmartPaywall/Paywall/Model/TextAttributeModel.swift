@@ -27,8 +27,9 @@ struct TextAttributeModel: Decodable {
         self.isUnderlined = try container.decodeIfPresent(Bool.self, forKey: .isUnderlined) ?? false
         self.fontName = try container.decode(FontBook.self, forKey: .fontName)
     }
+    
     func getFont() -> UIFont {
-        if let font = UIFont(name: fontName.rawValue, size: CGFloat(fontSize)) {
+        if let font = UIFont(name: fontName.actualFontName, size: CGFloat(fontSize)) {
             return font
         } else {
             return UIFont.systemFont(ofSize: CGFloat(fontSize))
