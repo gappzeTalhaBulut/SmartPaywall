@@ -106,6 +106,7 @@ final class ProductSelectionCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
+        label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = label.font.withSize(16)
         return label
@@ -123,6 +124,7 @@ final class ProductSelectionCell: UITableViewCell {
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .right
+        label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
