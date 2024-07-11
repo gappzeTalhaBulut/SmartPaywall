@@ -17,7 +17,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/sparrowcode/AlertKit", .upToNextMajor(from: "5.1.8")),
         .package(url: "https://github.com/onevcat/Kingfisher.git", .upToNextMajor(from: "7.0.0")),
-        .package(url: "https://github.com/gappzeTalhaBulut/BaseFoundation", branch: "main")
+        .package(url: "https://github.com/gappzeTalhaBulut/BaseFoundation", from: "1.0.0")
     ],
     targets: [
         .target(
