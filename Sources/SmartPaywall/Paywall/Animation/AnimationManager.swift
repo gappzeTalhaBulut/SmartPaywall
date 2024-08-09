@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AnimationManager {
+public class AnimationManager {
     static let shared = AnimationManager()
     
     private init() {}
