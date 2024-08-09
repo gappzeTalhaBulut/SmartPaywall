@@ -8,11 +8,11 @@
 import UIKit
 
 public class AnimationManager {
-    static let shared = AnimationManager()
+    public static let shared = AnimationManager()
     
     private init() {}
     
-    func startAnimation(_ animationType: AnimationType, on button: UIButton) {
+    public func startAnimation(_ animationType: AnimationType, on button: UIButton) {
         switch animationType {
         case .heartbeat:
             button.startHeartbeatAnimation()
@@ -21,7 +21,7 @@ public class AnimationManager {
         }
     }
     
-    func stopAnimation(_ animationType: AnimationType, on button: UIButton) {
+    public func stopAnimation(_ animationType: AnimationType, on button: UIButton) {
         switch animationType {
         case .heartbeat:
             button.stopHeartbeatAnimation()
