@@ -38,7 +38,7 @@ struct TextAttributeModel: Decodable {
     private func adjustFontSize(for idiom: UIUserInterfaceIdiom) -> Int {
         switch idiom {
         case .pad:
-            return Int(Double(fontSize) * 2)
+            return Int(Double(fontSize) * 1.5)
         case .phone:
             fallthrough
         default:
