@@ -38,7 +38,7 @@ class HorizontalListCell: UITableViewCell {
     let proText: UILabel = {
         let label = UILabel()
         label.text = "Pro"
-        UIDevice.current.userInterfaceIdiom == .pad ? .systemFont(ofSize: 20, weight: .medium) : nil
+        label.font = UIDevice.current.userInterfaceIdiom == .pad ? .systemFont(ofSize: 20, weight: .medium) : nil
         label.textAlignment = .center
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
