@@ -57,9 +57,9 @@ final class KusadasıPaywallViewController: BasePaywallController {
         if UIDevice.current.userInterfaceIdiom == .pad {
             productSelectionView.topAnchor.constraint(equalTo: infoListView.bottomAnchor, constant: 20).isActive = true
             productSelectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-            productSelectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+            productSelectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
             productSelectionView.bottomAnchor.constraint(equalTo: purchaseButton.topAnchor, constant: -30).isActive = true
-            productSelectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2).isActive = true
+            productSelectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.12).isActive = true
         } else {
             productSelectionView.topAnchor.constraint(equalTo: infoListView.bottomAnchor, constant: 20).isActive = true
             productSelectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
