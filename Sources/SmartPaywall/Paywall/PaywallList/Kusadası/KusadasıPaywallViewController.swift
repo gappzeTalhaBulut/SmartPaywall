@@ -12,6 +12,7 @@ final class KusadasıPaywallViewController: BasePaywallController {
     private lazy var infoListView = UIFactory.makeInfoListView(infoList: designModel.infoList)
     private lazy var cancelLabel = UIFactory.makeLabel(model: designModel.cancelInfo)
     private lazy var purchaseButton = makePurchaseButton()
+    
     private lazy var productSelectionView: HorizontalSelectionView = {
         let view = HorizontalSelectionView(model: designModel.subscription.option,
                                            priceList: self.priceList)
@@ -21,6 +22,7 @@ final class KusadasıPaywallViewController: BasePaywallController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
     private var selectedProductId = ""
     private let designModel: KusadasıModel
     
@@ -52,12 +54,19 @@ final class KusadasıPaywallViewController: BasePaywallController {
         infoListView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30).isActive = true
         //infoListView.heightAnchor.constraint(equalToConstant: 110).isActive = true
         
-        productSelectionView.topAnchor.constraint(equalTo: infoListView.bottomAnchor, constant: 20).isActive = true
-        productSelectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-        productSelectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
-        productSelectionView.bottomAnchor.constraint(equalTo: purchaseButton.topAnchor, constant: -30).isActive = true
-        productSelectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2).isActive = true
-        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            productSelectionView.topAnchor.constraint(equalTo: infoListView.bottomAnchor, constant: 20).isActive = true
+            productSelectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+            productSelectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+            productSelectionView.bottomAnchor.constraint(equalTo: purchaseButton.topAnchor, constant: -30).isActive = true
+            productSelectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2).isActive = true
+        } else {
+            productSelectionView.topAnchor.constraint(equalTo: infoListView.bottomAnchor, constant: 20).isActive = true
+            productSelectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+            productSelectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+            productSelectionView.bottomAnchor.constraint(equalTo: purchaseButton.topAnchor, constant: -30).isActive = true
+            productSelectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2).isActive = true
+        }
         
         purchaseButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30).isActive = true
         purchaseButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30).isActive = true
