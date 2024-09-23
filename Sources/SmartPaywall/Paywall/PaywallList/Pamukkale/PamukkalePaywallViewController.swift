@@ -46,15 +46,15 @@ final class PamukkalePaywallViewController: BasePaywallController {
         
         if UIDevice.current.userInterfaceIdiom == .pad {
             titleLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-            titleLabel.bottomAnchor.constraint(equalTo: subtitleLabel.topAnchor, constant: -35).isActive = true
+            titleLabel.bottomAnchor.constraint(equalTo: subtitleLabel.topAnchor, constant: -45).isActive = true
             
             subtitleLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-            subtitleLabel.bottomAnchor.constraint(equalTo: trialInfoLabel.topAnchor, constant: -15).isActive = true
+            subtitleLabel.bottomAnchor.constraint(equalTo: trialInfoLabel.topAnchor, constant: -45).isActive = true
             subtitleLabel.leadingAnchor.constraint(equalTo: purchaseButton.leadingAnchor).isActive = true
             subtitleLabel.trailingAnchor.constraint(equalTo: purchaseButton.trailingAnchor).isActive = true
             
             trialInfoLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-            trialInfoLabel.bottomAnchor.constraint(equalTo: priceInfoLabel.topAnchor).isActive = true
+            trialInfoLabel.bottomAnchor.constraint(equalTo: priceInfoLabel.topAnchor,constant: -20).isActive = true
             
             priceInfoLabel.leadingAnchor.constraint(equalTo: purchaseButton.leadingAnchor).isActive = true
             priceInfoLabel.trailingAnchor.constraint(equalTo: purchaseButton.trailingAnchor).isActive = true
