@@ -62,8 +62,8 @@ final class InfoTextSingleView: UIStackView {
         
         // Add the image view to the left side
         self.addArrangedSubview(imageView)
-        imageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: UIDevice.current.userInterfaceIdiom == .pad ? 60 : 40).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: UIDevice.current.userInterfaceIdiom == .pad ? 60 : 40).isActive = true
         
         let textStackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
         textStackView.axis = .vertical
