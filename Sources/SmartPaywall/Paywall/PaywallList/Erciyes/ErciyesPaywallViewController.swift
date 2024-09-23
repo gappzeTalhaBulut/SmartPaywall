@@ -53,7 +53,7 @@ final class ErciyesPaywallViewController: BasePaywallController {
         titleLabel.topAnchor.constraint(equalTo: centerImageView.bottomAnchor, constant: 20).isActive = true
         titleLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
         
-        listView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20).isActive = true
+        listView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: UIDevice.current.userInterfaceIdiom == .pad ? 40 : 20).isActive = true
         listView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30).isActive = true
         listView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30).isActive = true
         listView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 4).isActive = true
