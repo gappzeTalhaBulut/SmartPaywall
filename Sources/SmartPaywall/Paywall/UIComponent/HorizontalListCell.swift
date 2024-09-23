@@ -30,6 +30,7 @@ class HorizontalListCell: UITableViewCell {
     let freeText: UILabel = {
         let label = UILabel()
         label.text = "Free"
+        label.font = UIDevice.current.userInterfaceIdiom == .pad ? .systemFont(ofSize: 20, weight: .medium) : nil
         label.textAlignment = .center
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
