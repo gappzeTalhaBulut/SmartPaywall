@@ -56,7 +56,7 @@ final class BodrumPaywallViewController: BasePaywallController {
         centerImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 35).isActive = true
         centerImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30).isActive = true
         centerImageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: heightMultiplier).isActive = true
-        centerImageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        centerImageView.widthAnchor.constraint(equalToConstant: UIDevice.current.userInterfaceIdiom == .pad ? 90 : 60).isActive = true
 
         listView.leadingAnchor.constraint(equalTo: centerImageView.trailingAnchor, constant: 20).isActive = true
         listView.topAnchor.constraint(equalTo: centerImageView.topAnchor).isActive = true

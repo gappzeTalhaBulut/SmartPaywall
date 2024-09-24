@@ -50,13 +50,23 @@ extension SubscriptionButtonModel {
             return 0
         }
     }
+    
     func getHeightAnchor() -> CGFloat {
-        if let heightAnchor = heightAnchor {
-            return heightAnchor
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            if let heightAnchor = heightAnchor {
+                return heightAnchor + 20
+            } else {
+                return 62
+            }
         } else {
-            return 62
+            if let heightAnchor = heightAnchor {
+                return heightAnchor
+            } else {
+                return 62
+            }
         }
     }
+    
     func getBorderColor() -> CGColor? {
         if let borderColor = borderColor {
             return UIColor(hex: borderColor).cgColor

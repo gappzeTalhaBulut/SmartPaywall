@@ -392,6 +392,158 @@ public extension PaywallService {
             }
         }
         
+        currentPaywallController?.onRestore = { [weak self] in
+            guard let self = self else { return }
+            self.restorePurchases {
+                onRestoreSuccess()
+            }
+        }
+        currentPaywallController?.modalTransitionStyle = !UserDefaults.standard.bool(forKey: "homeViewed") ? .crossDissolve : .coverVertical
+        currentPaywallController?.modalPresentationStyle = .fullScreen
+        view.present(self.currentPaywallController!, animated: true)
+        
+    }
+}
+
+/// TEST LAYER
+extension PaywallService {
+    func fetchTestPaywall(
+        parameters: TestPaywallParameters,
+        completion: @escaping (Result<TestPaywallResponse, NetworkError>) -> Void
+    ) {
+        let model = TestPaywallModel(
+            paywallId: parameters.paywallId,
+            uniqueId: parameters.uniqueId,
+            bundle: parameters.bundle,
+            country: parameters.country,
+            language: parameters.language,
+            paywallVersion: parameters.paywallVersion,
+            version: parameters.version,
+            isCdn: parameters.isCdn
+        )
+        
+        self.network.request(
+            route: TestPaywallRouter.smartPaywall(
+                model: model,
+                serviceURL: parameters.serviceURL,
+                serviceToken: parameters.serviceToken
+            )
+        ) { [weak self] (response: Result<TestPaywallResponse, NetworkError>) in
+            guard self != nil else { return }
+            switch response {
+            case .success(let response):
+                debugPrint(response)
+                completion(.success(response))
+            case .failure(let error):
+                print(error)
+                completion(.failure(error))
+            }
+        }
+    }
+    func getTestPaywall(
+        couldNotPaywallOpen: @escaping (() -> Void),
+        parameters: TestPaywallParameters,
+        completion: @escaping ((Result<(any ControllerType, TestPaywallResponse, [Product]), Error>) -> Void)
+    ) {
+        self.fetchTestPaywall(parameters: parameters) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let paywallModel):
+                DispatchQueue.main.async {
+                    let controller = paywallModel.paywallJson.paywall.designObjects.make(
+                        generalModel: paywallModel.paywallJson.paywall.general,
+                        priceList: Dictionary(uniqueKeysWithValues: self.products.map { ($0.id, ($0.displayPrice, $0.priceFormatStyle.currencyCode)) })
+                    )
+                    completion(.success((controller, paywallModel, self.products)))
+                }
+            case .failure(let error):
+                couldNotPaywallOpen()
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    public func openTestPaywall(
+        parameters: TestPaywallParameters,
+        view: UIViewController,
+        onOpen: @escaping OnOpenCompletion,
+        onClose: (() -> ())? = nil,
+        experimentName: String,
+        onPurchaseSuccess: @escaping OnPurchaseSuccess,
+        couldNotOpenPaywall: @escaping notCloseCompletion,
+        onPurchaseFailed: @escaping OnPurchaseFailed,
+        onRestoreSuccess: @escaping () -> ()
+    ) {
+        self.getTestPaywall(couldNotPaywallOpen: {
+            couldNotOpenPaywall(parameters.paywallId, false, "")
+        }, parameters: parameters) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let (paywallController, paywallModel, products)):
+                self.presentTestPaywall(
+                    view: view,
+                    paywallController: paywallController,
+                    model: paywallModel,
+                    products: products,
+                    onOpen: onOpen,
+                    onClose: onClose,
+                    onPurchaseSuccess: { [weak self] purchaseTransactionId, paywallId, productCode, isABTest, abTestName in
+                        self?.currentPaywallController?.closePaywall {
+                            onPurchaseSuccess(purchaseTransactionId, paywallId, productCode, isABTest, abTestName)
+                        }
+                    },
+                    onPurchaseFailed: onPurchaseFailed,
+                    onRestoreSuccess: onRestoreSuccess
+                )
+            case .failure(let error):
+                couldNotOpenPaywall(parameters.paywallId, false, error.localizedDescription)
+                print(error)
+            }
+        }
+    }
+    
+    func presentTestPaywall(view: UIViewController,
+                        paywallController: any ControllerType,
+                        model: TestPaywallResponse,
+                        products: [Product],
+                        onOpen: @escaping OnOpenCompletion,
+                        onClose: (() -> ())? = nil,
+                        onPurchaseSuccess: @escaping OnPurchaseSuccess,
+                        onPurchaseFailed: @escaping OnPurchaseFailed,
+                        onRestoreSuccess: @escaping () -> ()) {
+        // TODO: - Completion kapanma, satınalma ve restore durumlarını unutma
+        currentPaywallController = paywallController
+        
+        currentPaywallController?.onOpen = {
+            /// Açılan paywall ' un ABTest olup olmadğını anlamak için ab test adının paywall isminden farklı olmasına bakıyoruz.
+            //onOpen(model.paywallId, model.ABTestName != model.paywallName, model.ABTestName)
+        }
+        
+        currentPaywallController?.onClose = {
+            onClose?()
+        }
+        
+        currentPaywallController?.onPurchase = { [weak self] productId in
+            guard let self else { return }
+            Task {
+                for product in products {
+                    if product.id == productId {
+                        do {
+                            try await self.makePurchase(productID: product.id, onPurchaseSuccess: { purchaseTransactionId, vendorProductId in
+                                //onPurchaseSuccess(purchaseTransactionId, model.paywallId, vendorProductId, model.ABTestName != model.paywallName, model.ABTestName )
+                            }, onPurchaseFailed: { productCode, errorCode, errorDetail in
+                                //onPurchaseFailed(model.paywallId, model.ABTestName != model.paywallName, model.ABTestName, productCode, errorCode, errorDetail)
+                            })
+                        } catch {
+                            // Burada hata yönetimi yapabilirsiniz
+                            print("Purchase failed with error: \(error)")
+                        }
+                        break
+                    }
+                }
+            }
+        }
+        
         
         currentPaywallController?.onRestore = { [weak self] in
             guard let self = self else { return }

@@ -14,10 +14,7 @@ struct TextAttributeModel: Decodable {
     let fontName: FontBook
     
     private enum CodingKeys: String, CodingKey {
-        case fontSize
-        case fontColor
-        case isUnderlined
-        case fontName
+        case fontSize, fontColor, isUnderlined, fontName
     }
     
     init(from decoder: Decoder) throws {
@@ -29,11 +26,27 @@ struct TextAttributeModel: Decodable {
     }
     
     func getFont() -> UIFont {
-        if let font = UIFont(name: fontName.actualFontName, size: CGFloat(fontSize)) {
+        let adjustedFontSize = adjustFontSize(for: UIDevice.current.userInterfaceIdiom)
+        if let font = UIFont(name: fontName.actualFontName, size: CGFloat(adjustedFontSize)) {
             return font
         } else {
-            return UIFont.systemFont(ofSize: CGFloat(fontSize))
+            print("Font not found: \(fontName.actualFontName), reverting to system font.")
+            return UIFont.systemFont(ofSize: CGFloat(adjustedFontSize))
         }
     }
+    
+    private func adjustFontSize(for idiom: UIUserInterfaceIdiom) -> Int {
+        switch idiom {
+        case .pad:
+            return Int(Double(fontSize) * 1.5)
+        case .phone:
+            fallthrough
+        default:
+            return fontSize
+        }
+    }
+    
+    func getFontColor() -> UIColor {
+        return UIColor(named: fontColor) ?? UIColor.black
+    }
 }
-

@@ -67,7 +67,7 @@ final class IstanbulPaywallViewController: BasePaywallController {
         //listTableView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         listTableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 45).isActive = true
         listTableView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.90).isActive = true
-        listTableView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.29).isActive = true
+        listTableView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: UIDevice.current.userInterfaceIdiom == .pad ? 0.20 : 0.29).isActive = true
         
         trialInfoLabel.leadingAnchor.constraint(equalTo: priceInfoLabel.leadingAnchor).isActive = true
         trialInfoLabel.trailingAnchor.constraint(equalTo: priceInfoLabel.trailingAnchor).isActive = true

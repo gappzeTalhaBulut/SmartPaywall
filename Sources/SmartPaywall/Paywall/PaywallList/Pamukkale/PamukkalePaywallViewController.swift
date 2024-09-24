@@ -44,32 +44,58 @@ final class PamukkalePaywallViewController: BasePaywallController {
         view.addSubview(purchaseButton)
         view.addSubview(cancelInfoLabel)
         
-        titleLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        titleLabel.bottomAnchor.constraint(equalTo: subtitleLabel.topAnchor, constant: -25).isActive = true
-        
-        subtitleLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        subtitleLabel.bottomAnchor.constraint(equalTo: trialInfoLabel.topAnchor, constant: -5).isActive = true
-        subtitleLabel.leadingAnchor.constraint(equalTo: purchaseButton.leadingAnchor).isActive = true
-        subtitleLabel.trailingAnchor.constraint(equalTo: purchaseButton.trailingAnchor).isActive = true
-        
-        trialInfoLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        trialInfoLabel.bottomAnchor.constraint(equalTo: priceInfoLabel.topAnchor).isActive = true
-        
-        priceInfoLabel.leadingAnchor.constraint(equalTo: purchaseButton.leadingAnchor).isActive = true
-        priceInfoLabel.trailingAnchor.constraint(equalTo: purchaseButton.trailingAnchor).isActive = true
-        priceInfoLabel.bottomAnchor.constraint(equalTo: purchaseButton.topAnchor, constant: -10).isActive = true
-        
-        if designModel.subscribeButtons.first?.animation == "" {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            titleLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+            titleLabel.bottomAnchor.constraint(equalTo: subtitleLabel.topAnchor, constant: -45).isActive = true
+            
+            subtitleLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+            subtitleLabel.bottomAnchor.constraint(equalTo: trialInfoLabel.topAnchor, constant: -45).isActive = true
+            subtitleLabel.leadingAnchor.constraint(equalTo: purchaseButton.leadingAnchor).isActive = true
+            subtitleLabel.trailingAnchor.constraint(equalTo: purchaseButton.trailingAnchor).isActive = true
+            
+            trialInfoLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+            trialInfoLabel.bottomAnchor.constraint(equalTo: priceInfoLabel.topAnchor,constant: -20).isActive = true
+            
+            priceInfoLabel.leadingAnchor.constraint(equalTo: purchaseButton.leadingAnchor).isActive = true
+            priceInfoLabel.trailingAnchor.constraint(equalTo: purchaseButton.trailingAnchor).isActive = true
+            priceInfoLabel.bottomAnchor.constraint(equalTo: purchaseButton.topAnchor, constant: -20).isActive = true
+            
             purchaseButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
             purchaseButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
+            purchaseButton.heightAnchor.constraint(equalToConstant: designModel.subscribeButtons.first?.getHeightAnchor() ?? 62).isActive = true
+            
+            cancelInfoLabel.topAnchor.constraint(equalTo: purchaseButton.bottomAnchor, constant: 25).isActive = true
+            cancelInfoLabel.centerXAnchor.constraint(equalTo: purchaseButton.centerXAnchor).isActive = true
+            cancelInfoLabel.bottomAnchor.constraint(equalTo: restoreLabel.topAnchor, constant: -25).isActive = true
+            
         } else {
-            purchaseButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
-            purchaseButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
+            titleLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+            titleLabel.bottomAnchor.constraint(equalTo: subtitleLabel.topAnchor, constant: -25).isActive = true
+            
+            subtitleLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+            subtitleLabel.bottomAnchor.constraint(equalTo: trialInfoLabel.topAnchor, constant: -5).isActive = true
+            subtitleLabel.leadingAnchor.constraint(equalTo: purchaseButton.leadingAnchor).isActive = true
+            subtitleLabel.trailingAnchor.constraint(equalTo: purchaseButton.trailingAnchor).isActive = true
+            
+            trialInfoLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+            trialInfoLabel.bottomAnchor.constraint(equalTo: priceInfoLabel.topAnchor).isActive = true
+            
+            priceInfoLabel.leadingAnchor.constraint(equalTo: purchaseButton.leadingAnchor).isActive = true
+            priceInfoLabel.trailingAnchor.constraint(equalTo: purchaseButton.trailingAnchor).isActive = true
+            priceInfoLabel.bottomAnchor.constraint(equalTo: purchaseButton.topAnchor, constant: -10).isActive = true
+            
+            if designModel.subscribeButtons.first?.animation == "" {
+                purchaseButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
+                purchaseButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
+            } else {
+                purchaseButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
+                purchaseButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
+            }
+            purchaseButton.heightAnchor.constraint(equalToConstant: designModel.subscribeButtons.first?.getHeightAnchor() ?? 62).isActive = true
+            cancelInfoLabel.topAnchor.constraint(equalTo: purchaseButton.bottomAnchor, constant: 25).isActive = true
+            cancelInfoLabel.centerXAnchor.constraint(equalTo: purchaseButton.centerXAnchor).isActive = true
+            cancelInfoLabel.bottomAnchor.constraint(equalTo: restoreLabel.topAnchor, constant: -25).isActive = true
         }
-        purchaseButton.heightAnchor.constraint(equalToConstant: designModel.subscribeButtons.first?.getHeightAnchor() ?? 62).isActive = true
-        cancelInfoLabel.topAnchor.constraint(equalTo: purchaseButton.bottomAnchor, constant: 25).isActive = true
-        cancelInfoLabel.centerXAnchor.constraint(equalTo: purchaseButton.centerXAnchor).isActive = true
-        cancelInfoLabel.bottomAnchor.constraint(equalTo: restoreLabel.topAnchor, constant: -25).isActive = true
     }
 }
 private extension PamukkalePaywallViewController {
