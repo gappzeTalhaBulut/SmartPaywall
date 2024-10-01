@@ -38,7 +38,7 @@ final class VerticalProductSelectionView: UITableView, UITableViewDelegate, UITa
         let divisionFactor = product.divisionFactor
 
         // Fiyatı bölme
-        let dividedPriceString = priceString.replacePriceWithDivisionFactor(with: priceList, divisionFactor: divisionFactor)
+        let dividedPriceString = priceString.replacePrice(with: priceList, multiplier: divisionFactor)
         
         cell.configure(with: product,
                        backgroundColor: model.backgroundColor,
