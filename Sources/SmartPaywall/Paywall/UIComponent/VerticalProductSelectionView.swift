@@ -35,7 +35,7 @@ final class VerticalProductSelectionView: UITableView, UITableViewDelegate, UITa
         let priceString = priceList[product.productId]?.localizedPrice ?? ""
 
         // divisionFactor'ı kullan
-        let divisionFactor = product.divisionFactor
+        let divisionFactor = product.multiplier
 
         // Fiyatı bölme
         let dividedPriceString = priceString.replacePrice(with: priceList, multiplier: divisionFactor)
