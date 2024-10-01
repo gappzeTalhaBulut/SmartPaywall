@@ -39,6 +39,7 @@ struct SubscriptionProductModel: Decodable {
     let productId: String
     var isSelected: Bool
     var ticketValue: String
+    let divisionFactor: Double
     
     private enum CodingKeys: String, CodingKey {
         case productName
@@ -46,6 +47,7 @@ struct SubscriptionProductModel: Decodable {
         case productId
         case isSelected
         case ticketValue
+        case divisionFactor
     }
     
     init(from decoder: Decoder) throws {
@@ -55,5 +57,6 @@ struct SubscriptionProductModel: Decodable {
         self.productId = try container.decode(String.self, forKey: .productId)
         self.isSelected = try container.decodeIfPresent(Bool.self, forKey: .isSelected) ?? false
         self.ticketValue = try container.decodeIfPresent(String.self, forKey: .ticketValue) ?? ""
+        self.divisionFactor = try container.decodeIfPresent(Double.self, forKey: .divisionFactor) ?? 1.0
     }
 }

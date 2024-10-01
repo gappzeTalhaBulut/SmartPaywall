@@ -28,6 +28,21 @@ extension String {
             return self
         }
     }
+    func replacePriceWithDivisionFactor(with list: PriceList, divisionFactor: Double = 1.0) -> String {
+        guard let productId = self.getProductId() else { return self }
+        guard let priceInfo = list[productId] else { return self }
+        guard let price = priceInfo.localizedPrice, let currencySymbol = priceInfo.currencySymbol else { return self }
+
+        // Fiyatı işleme
+        var lastPriceString = price.replacingOccurrences(of: ",", with: ".")
+        
+        if let lastPrice = Double(lastPriceString) {
+            let dividedPrice = lastPrice / divisionFactor
+            lastPriceString = String(format: "%.2f", dividedPrice)
+        }
+        
+        return self.replaceFirst(of: "{*\(productId)*}", with: "{\(currencySymbol)\(lastPriceString)}")
+    }
     
     func replacePrice(with list: [String: (String?, String?)], multiplier: Double = 1.0) -> String {
         guard let productId = self.getProductId() else { return self }

@@ -28,18 +28,28 @@ final class VerticalProductSelectionView: UITableView, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return model.productList.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withClass: ProductSelectionCell.self, for: indexPath)
-        let price = priceList[model.productList[indexPath.row].productId]?.localizedPrice ?? ""
-        cell.configure(with: model.productList[indexPath.row],
+        
+        let product = model.productList[indexPath.row]
+        let priceString = priceList[product.productId]?.localizedPrice ?? ""
+
+        // divisionFactor'ı kullan
+        let divisionFactor = product.divisionFactor
+
+        // Fiyatı bölme
+        let dividedPriceString = priceString.replacePriceWithDivisionFactor(with: priceList, divisionFactor: divisionFactor)
+        
+        cell.configure(with: product,
                        backgroundColor: model.backgroundColor,
                        unSelectedImage: model.unSelectedImage ?? "",
                        selectedImage: model.selectedImage ?? "",
                        selectedColor: model.selectedColor,
-                       priceValue: price)
+                       priceValue: dividedPriceString)
+        
         return cell
     }
+
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 42 + (10 * CGFloat(UIScreen.main.scale))
