@@ -42,14 +42,9 @@ final class UIFactory {
     static func makeCalculatedLabel(model: LabelModel, priceList: PriceList) -> AttributedLabel {
         let label = AttributedLabel()
         label.textAlignment = model.textAlignment.convert()
-        var priceFormattedString1 = model.text.replacePrice(with: priceList, multiplier: 1 / (model.multiplier ?? 1.0))
-        
-        // İkinci fiyatı hesapla
-        var priceFormattedString2 = priceFormattedString1.replacePrice(with: priceList, multiplier: 1 / (model.multiplier2 ?? 1.0))
-        
-        // Fiyatları birleştir
-        let finalPriceString = "\(priceFormattedString1), \(priceFormattedString2)"
-        label.set(text: finalPriceString,
+        var priceFormattedString = model.text.replacePrice(with: priceList, multiplier: 1 / (model.multiplier ?? 1.0))
+        priceFormattedString = priceFormattedString.replacePrice(with: priceList, multiplier: 1 / (model.multiplier2 ?? 1.0))
+        label.set(text: priceFormattedString,
                   attributeList: model.attributes)
         label.numberOfLines = 0
         label.isHidden = !model.isVisible
@@ -86,7 +81,7 @@ final class UIFactory {
     static func makePurchaseButton(model: SubscriptionButtonModel?) -> UIButton {
         let button = UIButton()
         button.setTitle(model?.text, for: .normal)
-        // model?.animation == true ? button.startHeartbeatAnimation() : button.stopHeartbeatAnimation()
+       // model?.animation == true ? button.startHeartbeatAnimation() : button.stopHeartbeatAnimation()
         button.setTitleColor(UIColor(hex: model?.attributes.first?.fontColor ?? ""),
                              for: .normal)
         button.backgroundColor = UIColor(hex: model?.backgroundColor ?? "")
@@ -101,7 +96,7 @@ final class UIFactory {
     static func makePurchaseButtonMarmaris(model: SubscriptionButtonModel?) -> UIButton {
         let button = UIButton()
         button.setTitle(model?.text, for: .normal)
-        // model?.animation == true ? button.startHeartbeatAnimation() : button.stopHeartbeatAnimation()
+       // model?.animation == true ? button.startHeartbeatAnimation() : button.stopHeartbeatAnimation()
         button.setTitleColor(UIColor(hex: model?.attributes.first?.fontColor ?? ""),
                              for: .normal)
         button.backgroundColor = UIColor(hex: model?.backgroundColor ?? "")
@@ -144,10 +139,10 @@ final class UIFactory {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }
-    //    static func makeSingleInfoListView(infoList: [ListElementModel]) -> InfoViewController {
-    //        let viewController = InfoViewController(infoList: infoList)
-    //        viewController.translatesAutoresizingMaskIntoConstraints = false
-    //        //viewController.infoList = infoList
-    //        return viewController
-    //    }
+//    static func makeSingleInfoListView(infoList: [ListElementModel]) -> InfoViewController {
+//        let viewController = InfoViewController(infoList: infoList)
+//        viewController.translatesAutoresizingMaskIntoConstraints = false
+//        //viewController.infoList = infoList
+//        return viewController
+//    }
 }
