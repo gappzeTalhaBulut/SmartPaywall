@@ -45,11 +45,13 @@ extension String {
         lastPriceString = lastPriceString.replacingOccurrences(of: ",", with: ".")
         
         if multiplier != 1.0 {
+            print("Before applying multiplier: \(lastPriceString)")
             if let currencySymbol = list[productId]?.1 {
                 if currencySymbol.first == price.first {
                     lastPriceString.removeFirst()
                     if let lastPrice = Double(lastPriceString) {
                         lastPriceString = currencySymbol + String(format: "%.2f", lastPrice * multiplier)
+                        print("After applying multiplier: \(lastPriceString)")
                     }
                 } else if currencySymbol.first == price.last {
                     lastPriceString.removeLast()
