@@ -43,7 +43,7 @@ final class UIFactory {
         let label = AttributedLabel()
         label.textAlignment = model.textAlignment.convert()
         var priceFormattedString = model.text.replacePrice(with: priceList, multiplier: 1 / (model.multiplier ?? 1.0))
-        priceFormattedString = priceFormattedString.replacePrice(with: priceList, multiplier: 1 / (model.multiplier2 ?? 1.0))
+        priceFormattedString = priceFormattedString.replacePrice(with: priceList, multiplier: 1 / 4.0)
         label.set(text: priceFormattedString,
                   attributeList: model.attributes)
         label.numberOfLines = 0
