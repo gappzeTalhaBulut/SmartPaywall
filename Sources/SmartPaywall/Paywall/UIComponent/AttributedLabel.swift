@@ -25,17 +25,24 @@ class AttributedLabel: UILabel {
     func set(text: String, attributeList: [TextAttributeModel]) {
         let model = findRanges(text: text)
         let fullString = model.trimmedText
-        
+
         let fullAttributedString = NSAttributedString(string: fullString, attributes: getAttributes(model: attributeList.first))
         let fullMutableAttributedString = NSMutableAttributedString(attributedString: fullAttributedString)
-    
+
+        // index + 1 yerine index kontrolü yap
         for (index, range) in model.ranges.enumerated() {
+            // attributeList'in boyutunu kontrol et
+            guard index + 1 < attributeList.count else {
+                print("Attribute list index out of range for index: \(index)")
+                continue // Eğer index geçerli değilse devam et
+            }
             let attributes = attributeList[index + 1]
             fullMutableAttributedString.addAttributes(getAttributes(model: attributes), range: range)
         }
-        
+
         self.attributedText = fullMutableAttributedString
     }
+
 
     @objc
     private func didClickLabel() {
