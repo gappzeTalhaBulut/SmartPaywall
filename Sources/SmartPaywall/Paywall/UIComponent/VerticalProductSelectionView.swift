@@ -32,7 +32,8 @@ final class VerticalProductSelectionView: UITableView, UITableViewDelegate, UITa
         let cell = tableView.dequeueReusableCell(withClass: ProductSelectionCell.self, for: indexPath)
         
         let product = model.productList[indexPath.row]
-        let priceString = priceList[product.productId]?.localizedPrice ?? ""
+        let priceString = priceList[product.subText]?.localizedPrice ?? ""
+        let price = priceList[product.productId]?.localizedPrice ?? ""
 
         // divisionFactor'ı kullan
         let divisionFactor = product.multiplier
@@ -45,8 +46,9 @@ final class VerticalProductSelectionView: UITableView, UITableViewDelegate, UITa
                        unSelectedImage: model.unSelectedImage ?? "",
                        selectedImage: model.selectedImage ?? "",
                        selectedColor: model.selectedColor,
-                       priceValue: dividedPriceString)
-        
+                       priceValue: price,
+                       subText: dividedPriceString)
+                        
         return cell
     }
 
@@ -153,7 +155,8 @@ final class ProductSelectionCell: UITableViewCell {
                    unSelectedImage: String,
                    selectedImage: String,
                    selectedColor: String,
-                   priceValue: String) {
+                   priceValue: String,
+                   subText: String) {
         let selectedColor = UIColor(hex: selectedColor)
         containerView.backgroundColor = UIColor(hex: backgroundColor)
         if let url = URL(string: product.isSelected ? selectedImage : unSelectedImage) {
