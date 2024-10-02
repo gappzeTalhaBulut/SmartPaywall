@@ -32,14 +32,13 @@ final class VerticalProductSelectionView: UITableView, UITableViewDelegate, UITa
         let cell = tableView.dequeueReusableCell(withClass: ProductSelectionCell.self, for: indexPath)
         
         let product = model.productList[indexPath.row]
-        let priceString = product.subText
         let price = priceList[product.productId]?.localizedPrice ?? ""
-
-        // divisionFactor'ı kullan
+        
         let divisionFactor = product.multiplier
-
-        // Fiyatı bölme
-        let dividedPriceString = priceString.replacePrice(with: priceList, multiplier: 1 / divisionFactor)
+        let dividedPriceString = product.subText.replacePrice(with: priceList, multiplier: 1 / divisionFactor)
+        
+        // attributeList'i uygun şekilde oluşturun
+        let attributeList = model.textAttributes
         
         cell.configure(with: product,
                        backgroundColor: model.backgroundColor,
@@ -47,10 +46,12 @@ final class VerticalProductSelectionView: UITableView, UITableViewDelegate, UITa
                        selectedImage: model.selectedImage ?? "",
                        selectedColor: model.selectedColor,
                        priceValue: price,
-                       subText: dividedPriceString)
-                        
+                       subText: dividedPriceString,
+                       attributeList: attributeList)
+        
         return cell
     }
+
 /*
  label.textAlignment = model.textAlignment.convert()
  var priceFormattedString = model.text.replacePrice(with: priceList, multiplier: 1 / (model.multiplier ?? 1.0))
@@ -127,8 +128,8 @@ final class ProductSelectionCell: UITableViewCell {
         return label
     }()
     
-    private lazy var subTitleLabel: UILabel = {
-        let label = UILabel()
+    private lazy var subTitleLabel: AttributedLabel = {
+        let label = AttributedLabel()
         label.textAlignment = .left
         label.textColor = UIColor(hex: "0F61F8")
         label.font = label.font.withSize(14)
@@ -159,14 +160,15 @@ final class ProductSelectionCell: UITableViewCell {
                    selectedImage: String,
                    selectedColor: String,
                    priceValue: String,
-                   subText: String) {
+                   subText: String,
+                   attributeList: [TextAttributeModel]) {
         let selectedColor = UIColor(hex: selectedColor)
         containerView.backgroundColor = UIColor(hex: backgroundColor)
         if let url = URL(string: product.isSelected ? selectedImage : unSelectedImage) {
             leftImageView.kf.setImage(with: url)
         }
         titleLabel.text = product.productName
-        subTitleLabel.text = product.subText
+        subTitleLabel.set(text: subText, attributeList: attributeList)
         subTitleLabel.isHidden = product.subText.isEmpty
         priceLabel.text = priceValue
         containerView.layer.borderWidth = product.isSelected ? 2.0 : 0
