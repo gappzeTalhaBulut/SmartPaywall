@@ -32,14 +32,14 @@ final class VerticalProductSelectionView: UITableView, UITableViewDelegate, UITa
         let cell = tableView.dequeueReusableCell(withClass: ProductSelectionCell.self, for: indexPath)
         
         let product = model.productList[indexPath.row]
-        let priceString = priceList[product.subText]?.localizedPrice ?? ""
+        let priceString = product.subText
         let price = priceList[product.productId]?.localizedPrice ?? ""
 
         // divisionFactor'ı kullan
         let divisionFactor = product.multiplier
 
         // Fiyatı bölme
-        let dividedPriceString = priceString.replacePrice(with: priceList, multiplier: divisionFactor)
+        let dividedPriceString = priceString.replacePrice(with: priceList, multiplier: 1 / divisionFactor)
         
         cell.configure(with: product,
                        backgroundColor: model.backgroundColor,
@@ -51,7 +51,10 @@ final class VerticalProductSelectionView: UITableView, UITableViewDelegate, UITa
                         
         return cell
     }
-
+/*
+ label.textAlignment = model.textAlignment.convert()
+ var priceFormattedString = model.text.replacePrice(with: priceList, multiplier: 1 / (model.multiplier ?? 1.0))
+ priceFormattedString = priceFormattedString.replacePrice(with: priceList, multiplier: 1 / (model.multiplier2 ?? 1.0)) */
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 42 + (10 * CGFloat(UIScreen.main.scale))
