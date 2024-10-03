@@ -41,7 +41,7 @@ final class VerticalProductSelectionView: UITableView, UITableViewDelegate, UITa
         var dividedPriceString = product.subText.replacePrice(with: priceList, multiplier: 1 / divisionFactor)
         dividedPriceString = dividedPriceString.replacePrice(with: priceList, multiplier: 1 / divisionFactor2)
         // attributeList'i uygun şekilde oluşturun
-        let attributeList = model.textAttributes
+        let attributeList = model.textAttributes ?? []
         
         cell.configure(with: product,
                        backgroundColor: model.backgroundColor,

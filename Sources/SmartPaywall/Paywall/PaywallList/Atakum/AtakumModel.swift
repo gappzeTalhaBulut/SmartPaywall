@@ -31,7 +31,7 @@ struct SubscriptionOptionModel: Decodable {
     let unSelectedImage: String?
     let selectedColor: String
     var productList: [SubscriptionProductModel]
-    let textAttributes: [TextAttributeModel]
+    let textAttributes: [TextAttributeModel]?
 }
 
 struct SubscriptionProductModel: Decodable {
