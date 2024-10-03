@@ -102,7 +102,8 @@ final class HorizontalProductSelectionCell: UICollectionViewCell {
     private lazy var titleStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
-        view.spacing = 20
+        view.distribution = .fillProportionally
+        view.spacing = 15
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -180,7 +181,6 @@ private extension HorizontalProductSelectionCell {
             containerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -3),
             containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            titleStackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             titleStackView.topAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 15),
             titleStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -15),
             titleStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10),
