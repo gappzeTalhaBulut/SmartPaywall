@@ -34,7 +34,7 @@ struct LabelModel: Decodable {
         self.attributes = try container.decode([TextAttributeModel].self, forKey: .attributes)
         self.isVisible = try container.decodeIfPresent(Bool.self, forKey: .isVisible) ?? true
         self.multiplier = try container.decodeIfPresent(Double.self, forKey: .multiplier) ?? 1.0
-        self.multiplier2 = try container.decodeIfPresent(Double.self, forKey: .multiplier2) ?? 1.0
+        self.multiplier2 = try container.decodeIfPresent(Double.self, forKey: .multiplier2) ?? 0.4
     }
 }
 
