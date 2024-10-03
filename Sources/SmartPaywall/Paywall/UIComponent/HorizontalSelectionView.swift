@@ -33,11 +33,23 @@ final class HorizontalSelectionView: UICollectionView, UICollectionViewDelegate,
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! HorizontalProductSelectionCell
-        let price = priceList[model.productList[indexPath.item].productId]?.localizedPrice ?? ""
+        let product = model.productList[indexPath.row]
+        let price = priceList[product.productId]?.localizedPrice ?? ""
+        
+        let divisionFactor = product.multiplier ?? 1.0
+        let divisionFactor2 = product.multiplier2 ?? 1.0
+        
+        var dividedPriceString = product.subText.replacePrice(with: priceList, multiplier: 1 / divisionFactor)
+        dividedPriceString = dividedPriceString.replacePrice(with: priceList, multiplier: 1 / divisionFactor2)
+        // attributeList'i uygun şekilde oluşturun
+        let attributeList = model.textAttributes ?? []
+        
         cell.configure(with: model.productList[indexPath.item],
                        backgroundColor: model.backgroundColor,
                        selectedColor: model.selectedColor,
-                       priceValue: price)
+                       priceValue: price,
+                       subText: dividedPriceString,
+                       attributeList: attributeList)
         return cell
     }
 
@@ -103,8 +115,8 @@ final class HorizontalProductSelectionCell: UICollectionViewCell {
         return label
     }()
 
-    private lazy var subTitleLabel: UILabel = {
-        let label = UILabel()
+    private lazy var subTitleLabel: AttributedLabel = {
+        let label = AttributedLabel()
         label.textAlignment = .center
         label.textColor = .black
         label.font = label.font.withSize(14)
@@ -133,11 +145,13 @@ final class HorizontalProductSelectionCell: UICollectionViewCell {
     func configure(with product: SubscriptionProductModel,
                    backgroundColor: String,
                    selectedColor: String,
-                   priceValue: String) {
+                   priceValue: String,
+                   subText: String,
+                   attributeList: [TextAttributeModel]) {
         let selectedColor = UIColor(hex: selectedColor)
         containerView.backgroundColor = UIColor(hex: backgroundColor)
         titleLabel.text = product.productName
-        subTitleLabel.text = product.subText
+        subTitleLabel.set(text: subText, attributeList: attributeList)
         subTitleLabel.isHidden = product.subText.isEmpty
         priceLabel.text = priceValue
         let unSelectedColor = UIColor.lightGray
