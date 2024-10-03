@@ -34,6 +34,7 @@ extension String {
         guard let price = list[productId]?.0 else { return self }
         var lastPriceString = price
 
+        // Eğer fiyat virgül içeriyorsa nokta ile değiştir
         if let commaRange = lastPriceString.range(of: ",") {
             let substringBeforeComma = lastPriceString[..<commaRange.lowerBound]
             if substringBeforeComma.contains(".") {
@@ -44,23 +45,21 @@ extension String {
 
         lastPriceString = lastPriceString.replacingOccurrences(of: ",", with: ".")
         
+        // Currency symbol price string'in ilk karakteri olacak
+        let currencySymbol = String(price.first!)
+        
         if multiplier != 1.0 {
             print("Before applying multiplier: \(lastPriceString)")
-            if let currencySymbol = list[productId]?.1 {
-                if currencySymbol.first == price.first {
-                    lastPriceString.removeFirst()
-                    if let lastPrice = Double(lastPriceString) {
-                        lastPriceString = currencySymbol + String(format: "%.2f", lastPrice * multiplier)
-                        print("After applying multiplier: \(lastPriceString)")
-                    }
-                } else if currencySymbol.first == price.last {
-                    lastPriceString.removeLast()
-                    if let lastPrice = Double(lastPriceString) {
-                        lastPriceString = String(format: "%.2f", lastPrice * multiplier) + currencySymbol
-                    }
-                }
+            
+            // İlk karakterin currency symbol olup olmadığını kontrol ediyoruz
+            if let lastPrice = Double(lastPriceString.dropFirst()) {
+                lastPriceString = currencySymbol + String(format: "%.2f", lastPrice * multiplier)
+                print("After applying multiplier: \(lastPriceString)")
             }
         }
+
+        // İlk eşleşen productId'yi fiyat ile değiştir
         return self.replaceFirst(of: "{*\(productId)*}", with: "{\(lastPriceString)}")
     }
+
 }
