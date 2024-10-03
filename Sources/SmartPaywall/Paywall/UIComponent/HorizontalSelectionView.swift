@@ -112,7 +112,7 @@ final class HorizontalProductSelectionCell: UICollectionViewCell {
         let label = UILabel()
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = label.font.withSize(16)
+        label.font = .boldSystemFont(ofSize: 18)
         label.numberOfLines = 0
         return label
     }()
@@ -130,7 +130,7 @@ final class HorizontalProductSelectionCell: UICollectionViewCell {
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textColor = .black
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
