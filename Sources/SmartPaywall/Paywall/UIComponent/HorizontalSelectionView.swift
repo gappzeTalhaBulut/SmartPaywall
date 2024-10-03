@@ -171,8 +171,8 @@ private extension HorizontalProductSelectionCell {
         containerView.addSubview(titleStackView)
         
         titleStackView.addArrangedSubview(titleLabel)
-        titleStackView.addArrangedSubview(subTitleLabel)
         titleStackView.addArrangedSubview(priceLabel)
+        titleStackView.addArrangedSubview(subTitleLabel)
         
         
         NSLayoutConstraint.activate([
