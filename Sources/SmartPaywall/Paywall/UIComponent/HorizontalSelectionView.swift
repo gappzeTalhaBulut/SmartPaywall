@@ -185,11 +185,13 @@ private extension HorizontalProductSelectionCell {
             containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
-            titleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -15),
+            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10),
+            titleLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10),
             
             titleStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -15),
             titleStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10),
+            titleStackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             titleStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10)
         ])
     }
