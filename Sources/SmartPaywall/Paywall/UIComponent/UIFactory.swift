@@ -42,10 +42,10 @@ final class UIFactory {
     static func makeCalculatedLabel(model: LabelModel, priceList: PriceList) -> AttributedLabel {
         let label = AttributedLabel()
         label.textAlignment = model.textAlignment.convert()
-        var priceFormattedString = model.text.replacePrice(with: priceList, multiplier: 1 / (model.multiplier ?? 1.0))
+        var priceFormattedString = model.text.replacePrice(with: priceList, multiplier: 1 / model.multiplier)
         print("After multiplier 1 applied: \(priceFormattedString)")
 
-        priceFormattedString = priceFormattedString.replacePrice(with: priceList, multiplier: 1 / (model.multiplier2 ?? 1.0))
+        priceFormattedString = priceFormattedString.replacePrice(with: priceList, multiplier: 1 / model.multiplier2)
         print("After multiplier 2 applied: \(priceFormattedString)")
         print("Price List: \(priceList)")
         label.set(text: priceFormattedString,
