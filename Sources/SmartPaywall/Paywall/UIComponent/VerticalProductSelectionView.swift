@@ -55,10 +55,10 @@ final class VerticalProductSelectionView: UITableView, UITableViewDelegate, UITa
         return cell
     }
 
-/*
- label.textAlignment = model.textAlignment.convert()
- var priceFormattedString = model.text.replacePrice(with: priceList, multiplier: 1 / (model.multiplier ?? 1.0))
- priceFormattedString = priceFormattedString.replacePrice(with: priceList, multiplier: 1 / (model.multiplier2 ?? 1.0)) */
+    /*
+     label.textAlignment = model.textAlignment.convert()
+     var priceFormattedString = model.text.replacePrice(with: priceList, multiplier: 1 / (model.multiplier ?? 1.0))
+     priceFormattedString = priceFormattedString.replacePrice(with: priceList, multiplier: 1 / (model.multiplier2 ?? 1.0)) */
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 42 + (10 * CGFloat(UIScreen.main.scale))

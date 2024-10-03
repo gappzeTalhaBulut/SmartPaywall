@@ -103,7 +103,7 @@ final class HorizontalProductSelectionCell: UICollectionViewCell {
         let view = UIStackView()
         view.axis = .vertical
         view.distribution = .fillProportionally
-        view.spacing = 15
+        view.spacing = 5
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -113,6 +113,7 @@ final class HorizontalProductSelectionCell: UICollectionViewCell {
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = label.font.withSize(16)
+        label.numberOfLines = 0
         return label
     }()
 
@@ -121,6 +122,7 @@ final class HorizontalProductSelectionCell: UICollectionViewCell {
         label.textAlignment = .center
         label.textColor = .black
         label.font = label.font.withSize(14)
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -130,6 +132,7 @@ final class HorizontalProductSelectionCell: UICollectionViewCell {
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textColor = .black
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -168,9 +171,9 @@ private extension HorizontalProductSelectionCell {
         containerView.layer.cornerRadius = 15
         
         addSubview(containerView)
+        containerView.addSubview(titleLabel)
         containerView.addSubview(titleStackView)
-        
-        titleStackView.addArrangedSubview(titleLabel)
+    
         titleStackView.addArrangedSubview(priceLabel)
         titleStackView.addArrangedSubview(subTitleLabel)
         
@@ -181,7 +184,10 @@ private extension HorizontalProductSelectionCell {
             containerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -3),
             containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            titleStackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
+            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
+            titleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -15),
+            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10),
+            
             titleStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -15),
             titleStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10),
             titleStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10)
