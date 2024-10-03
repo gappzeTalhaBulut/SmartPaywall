@@ -40,8 +40,8 @@ struct SubscriptionProductModel: Decodable {
     let productId: String
     var isSelected: Bool
     var ticketValue: String
-    let multiplier: Double
-    let multiplier2: Double
+    let multiplier: Double?
+    let multiplier2: Double?
     
     private enum CodingKeys: String, CodingKey {
         case productName

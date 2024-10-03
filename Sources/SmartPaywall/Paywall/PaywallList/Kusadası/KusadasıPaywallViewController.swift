@@ -39,6 +39,7 @@ final class KusadasıPaywallViewController: BasePaywallController {
             }
         }
     }
+    
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
     override func setupUI() {

@@ -35,8 +35,8 @@ final class VerticalProductSelectionView: UITableView, UITableViewDelegate, UITa
         let product = model.productList[indexPath.row]
         let price = priceList[product.productId]?.localizedPrice ?? ""
         
-        let divisionFactor = product.multiplier
-        let divisionFactor2 = product.multiplier2
+        let divisionFactor = product.multiplier ?? 1.0
+        let divisionFactor2 = product.multiplier2 ?? 1.0
         
         var dividedPriceString = product.subText.replacePrice(with: priceList, multiplier: 1 / divisionFactor)
         dividedPriceString = dividedPriceString.replacePrice(with: priceList, multiplier: 1 / divisionFactor2)
