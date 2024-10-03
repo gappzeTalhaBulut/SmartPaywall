@@ -30,16 +30,8 @@ extension String {
     }
     
     func replacePrice(with list: [String: (String?, String?)], multiplier: Double = 1.0) -> String {
-        guard let productId = self.getProductId() else {
-            print("No valid product ID found.")
-            return self
-        }
-        
-        guard let price = list[productId]?.0 else {
-            print("Price not found for product ID: \(productId)")
-            return self
-        }
-        
+        guard let productId = self.getProductId() else { return self }
+        guard let price = list[productId]?.0 else { return self }
         var lastPriceString = price
 
         if let commaRange = lastPriceString.range(of: ",") {
@@ -55,7 +47,6 @@ extension String {
         if multiplier != 1.0 {
             print("Before applying multiplier: \(lastPriceString)")
             if let currencySymbol = list[productId]?.1 {
-                print("Currency symbol found: \(currencySymbol)")
                 if currencySymbol.first == price.first {
                     lastPriceString.removeFirst()
                     if let lastPrice = Double(lastPriceString) {
@@ -66,17 +57,10 @@ extension String {
                     lastPriceString.removeLast()
                     if let lastPrice = Double(lastPriceString) {
                         lastPriceString = String(format: "%.2f", lastPrice * multiplier) + currencySymbol
-                        print("After applying multiplier: \(lastPriceString)")
                     }
                 }
-            } else {
-                print("No currency symbol found for product ID: \(productId)")
             }
-        } else {
-            print("Multiplier is 1.0, skipping...")
         }
-        
         return self.replaceFirst(of: "{*\(productId)*}", with: "{\(lastPriceString)}")
     }
-
 }

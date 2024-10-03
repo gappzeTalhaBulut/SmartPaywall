@@ -12,8 +12,8 @@ struct LabelModel: Decodable {
     let url: String?
     let textAlignment: TextAlignmentType
     let attributes: [TextAttributeModel]
-    let multiplier: Double
-    let multiplier2: Double
+    let multiplier: Double?
+    let multiplier2: Double?
     let isVisible: Bool
     
     private enum CodingKeys: String, CodingKey {
@@ -33,8 +33,8 @@ struct LabelModel: Decodable {
         self.textAlignment = try container.decodeIfPresent(TextAlignmentType.self, forKey: .textAlignment) ?? .center
         self.attributes = try container.decode([TextAttributeModel].self, forKey: .attributes)
         self.isVisible = try container.decodeIfPresent(Bool.self, forKey: .isVisible) ?? true
-        self.multiplier = try container.decodeIfPresent(Double.self, forKey: .multiplier) ?? 1.0
-        self.multiplier2 = try container.decodeIfPresent(Double.self, forKey: .multiplier2) ?? 0.4
+        self.multiplier = try container.decodeIfPresent(Double.self, forKey: .multiplier)
+        self.multiplier2 = try container.decodeIfPresent(Double.self, forKey: .multiplier2)
     }
 }
 
