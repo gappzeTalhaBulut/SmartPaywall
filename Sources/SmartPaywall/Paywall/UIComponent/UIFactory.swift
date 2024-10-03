@@ -42,24 +42,19 @@ final class UIFactory {
     static func makeCalculatedLabel(model: LabelModel, priceList: PriceList) -> AttributedLabel {
         let label = AttributedLabel()
         label.textAlignment = model.textAlignment.convert()
-        
-        // Multiplier değerini kontrol edin
-        let multiplier1 = 1 / (model.multiplier ?? 1.0)
-        print("Multiplier 1: \(multiplier1)")  // Burada multiplier1'ı kontrol edin
+        var priceFormattedString = model.text.replacePrice(with: priceList, multiplier: 1 / (model.multiplier ?? 1.0))
+        print("After multiplier 1 applied: \(priceFormattedString)")
 
-        var priceFormattedString = model.text.replacePrice(with: priceList, multiplier: multiplier1)
-        
-        let multiplier2 = 1 / 4.0
-        print("Multiplier 2: \(multiplier2)")  // Burada multiplier2'yi kontrol edin
-        priceFormattedString = priceFormattedString.replacePrice(with: priceList, multiplier: multiplier2)
-        
-        label.set(text: priceFormattedString, attributeList: model.attributes)
+        priceFormattedString = priceFormattedString.replacePrice(with: priceList, multiplier: 1 / (model.multiplier2 ?? 1.0))
+        print("After multiplier 2 applied: \(priceFormattedString)")
+        print("Price List: \(priceList)")
+        label.set(text: priceFormattedString,
+                  attributeList: model.attributes)
         label.numberOfLines = 0
         label.isHidden = !model.isVisible
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }
-
     
     static func makePurchaseButtonWithPrice(model: SubscriptionButtonModel?, priceList: [String: (String?, String?)]) -> UIButton {
         let button = UIButton()
