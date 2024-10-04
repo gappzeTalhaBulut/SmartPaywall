@@ -9,7 +9,7 @@ import Foundation
 
 struct KusadasıModel: DesignObjectProtocol {
     let infoList: [ListElementModel]
-    let subscription: SubscriptionMultiplierModel
+    let subscriptionSecond: SubscriptionMultiplierModel
     let cancelInfo: LabelModel
     
     func make(generalModel: PaywallGeneralModel, priceList: PriceList) -> ControllerType {

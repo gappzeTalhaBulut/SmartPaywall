@@ -11,7 +11,7 @@ struct AtakumModel: DesignObjectProtocol {
     let title: LabelModel
     let infoList: [ListElementModel]
     let cancelInfo: LabelModel
-    let subscription: SubscriptionMultiplierModel
+    let subscriptionSecond: SubscriptionMultiplierModel
     
     func make(generalModel: PaywallGeneralModel, priceList: PriceList) -> ControllerType {
         return AtakumPaywallViewController(designModel: self,
