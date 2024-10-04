@@ -11,11 +11,11 @@ import Kingfisher
 final class HorizontalSelectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     var didSelect: ((_ productId: String) -> ())?
 
-    private var model: SubscriptionOptionModel
+    private var model: SubscriptionOptionMultiplierModel
     private var priceList: PriceList
     private let cellIdentifier = "ProductSelectionCell"
 
-    init(model: SubscriptionOptionModel, priceList: PriceList) {
+    init(model: SubscriptionOptionMultiplierModel, priceList: PriceList) {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         self.model = model
@@ -60,7 +60,7 @@ final class HorizontalSelectionView: UICollectionView, UICollectionViewDelegate,
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        var productList: [SubscriptionProductModel] = []
+        var productList: [SubscriptionMultiplierProductModel] = []
         var selectedProductId = ""
 
         for var (index, product) in model.productList.enumerated() {
@@ -146,7 +146,7 @@ final class HorizontalProductSelectionCell: UICollectionViewCell {
         super.init(coder: coder)
     }
 
-    func configure(with product: SubscriptionProductModel,
+    func configure(with product: SubscriptionMultiplierProductModel,
                    backgroundColor: String,
                    selectedColor: String,
                    priceValue: String,

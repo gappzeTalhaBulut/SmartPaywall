@@ -12,10 +12,10 @@ import BaseFoundation
 final class VerticalProductSelectionView: UITableView, UITableViewDelegate, UITableViewDataSource {
     var didSelect: ((_ productId: String) -> ())?
 
-    private var model: SubscriptionOptionModel
+    private var model: SubscriptionOptionMultiplierModel
     private let priceList: PriceList
     
-    init(model: SubscriptionOptionModel,
+    init(model: SubscriptionOptionMultiplierModel,
          priceList: PriceList) {
         self.model = model
         self.priceList = priceList
@@ -65,7 +65,7 @@ final class VerticalProductSelectionView: UITableView, UITableViewDelegate, UITa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var productList: [SubscriptionProductModel] = []
+        var productList: [SubscriptionMultiplierProductModel] = []
         var selectedProductId = ""
         
         for var (index, product) in model.productList.enumerated() {
@@ -157,7 +157,7 @@ final class ProductSelectionCell: UITableViewCell {
         super.init(coder: coder)
     }
     
-    func configure(with product: SubscriptionProductModel,
+    func configure(with product: SubscriptionMultiplierProductModel,
                    backgroundColor: String,
                    unSelectedImage: String,
                    selectedImage: String,
