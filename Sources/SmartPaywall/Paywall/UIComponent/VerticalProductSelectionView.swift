@@ -12,10 +12,10 @@ import BaseFoundation
 final class VerticalProductSelectionView: UITableView, UITableViewDelegate, UITableViewDataSource {
     var didSelect: ((_ productId: String) -> ())?
 
-    private var model: SubscriptionOptionModel
+    private var model: SubscriptionOptionMultiplierModel
     private let priceList: PriceList
     
-    init(model: SubscriptionOptionModel,
+    init(model: SubscriptionOptionMultiplierModel,
          priceList: PriceList) {
         self.model = model
         self.priceList = priceList
@@ -31,22 +31,41 @@ final class VerticalProductSelectionView: UITableView, UITableViewDelegate, UITa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withClass: ProductSelectionCell.self, for: indexPath)
-        let price = priceList[model.productList[indexPath.row].productId]?.localizedPrice ?? ""
-        cell.configure(with: model.productList[indexPath.row],
+        
+        let product = model.productList[indexPath.row]
+        let price = priceList[product.productId]?.localizedPrice ?? ""
+        
+        let divisionFactor = product.multiplier ?? 1.0
+        let divisionFactor2 = product.multiplier2 ?? 1.0
+        
+        var dividedPriceString = product.subText.replacePrice(with: priceList, multiplier: 1 / divisionFactor)
+        dividedPriceString = dividedPriceString.replacePrice(with: priceList, multiplier: 1 / divisionFactor2)
+        // attributeList'i uygun şekilde oluşturun
+        let attributeList = model.textAttributes ?? []
+        
+        cell.configure(with: product,
                        backgroundColor: model.backgroundColor,
                        unSelectedImage: model.unSelectedImage ?? "",
                        selectedImage: model.selectedImage ?? "",
                        selectedColor: model.selectedColor,
-                       priceValue: price)
+                       priceValue: price,
+                       subText: dividedPriceString,
+                       attributeList: attributeList)
+        
         return cell
     }
+
+    /*
+     label.textAlignment = model.textAlignment.convert()
+     var priceFormattedString = model.text.replacePrice(with: priceList, multiplier: 1 / (model.multiplier ?? 1.0))
+     priceFormattedString = priceFormattedString.replacePrice(with: priceList, multiplier: 1 / (model.multiplier2 ?? 1.0)) */
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 42 + (10 * CGFloat(UIScreen.main.scale))
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var productList: [SubscriptionProductModel] = []
+        var productList: [SubscriptionMultiplierProductModel] = []
         var selectedProductId = ""
         
         for var (index, product) in model.productList.enumerated() {
@@ -112,8 +131,8 @@ final class ProductSelectionCell: UITableViewCell {
         return label
     }()
     
-    private lazy var subTitleLabel: UILabel = {
-        let label = UILabel()
+    private lazy var subTitleLabel: AttributedLabel = {
+        let label = AttributedLabel()
         label.textAlignment = .left
         label.textColor = UIColor(hex: "0F61F8")
         label.font = label.font.withSize(14)
@@ -138,19 +157,21 @@ final class ProductSelectionCell: UITableViewCell {
         super.init(coder: coder)
     }
     
-    func configure(with product: SubscriptionProductModel,
+    func configure(with product: SubscriptionMultiplierProductModel,
                    backgroundColor: String,
                    unSelectedImage: String,
                    selectedImage: String,
                    selectedColor: String,
-                   priceValue: String) {
+                   priceValue: String,
+                   subText: String,
+                   attributeList: [TextAttributeModel]) {
         let selectedColor = UIColor(hex: selectedColor)
         containerView.backgroundColor = UIColor(hex: backgroundColor)
         if let url = URL(string: product.isSelected ? selectedImage : unSelectedImage) {
             leftImageView.kf.setImage(with: url)
         }
         titleLabel.text = product.productName
-        subTitleLabel.text = product.subText
+        subTitleLabel.set(text: subText, attributeList: attributeList)
         subTitleLabel.isHidden = product.subText.isEmpty
         priceLabel.text = priceValue
         containerView.layer.borderWidth = product.isSelected ? 2.0 : 0

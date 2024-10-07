@@ -14,7 +14,7 @@ final class AtakumPaywallViewController: BasePaywallController {
     private lazy var infoListView = UIFactory.makeInfoListView(infoList: designModel.infoList)
     
     private lazy var productSelectionView: VerticalProductSelectionView = {
-        let view = VerticalProductSelectionView(model: designModel.subscription.option,
+        let view = VerticalProductSelectionView(model: designModel.subscriptionSecond.option,
                                                 priceList: self.priceList)
         view.didSelect = { [weak self] productId in
             self?.selectedProductId = productId
@@ -35,7 +35,7 @@ final class AtakumPaywallViewController: BasePaywallController {
         super.init(generalModel: generalModel, priceList: priceList)
         findFirstProductIdIfSelected()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            let animationType = AnimationType(rawValue: designModel.subscription.subscribeButtons.first?.animation ?? "")
+            let animationType = AnimationType(rawValue: designModel.subscriptionSecond.subscribeButtons.first?.animation ?? "")
             if let animationType = animationType {
                 AnimationManager.shared.startAnimation(animationType, on: self.purchaseButton)
             }
@@ -69,14 +69,14 @@ final class AtakumPaywallViewController: BasePaywallController {
         productSelectionView.trailingAnchor.constraint(equalTo: headerStackView.trailingAnchor).isActive = true
         productSelectionView.bottomAnchor.constraint(equalTo: purchaseButton.topAnchor, constant: -10).isActive = true
         
-        if designModel.subscription.subscribeButtons.first?.animation == "" {
+        if designModel.subscriptionSecond.subscribeButtons.first?.animation == "" {
             purchaseButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 50).isActive = true
             purchaseButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50).isActive = true
         } else {
             purchaseButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30).isActive = true
             purchaseButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30).isActive = true
         }
-        purchaseButton.heightAnchor.constraint(equalToConstant: designModel.subscription.subscribeButtons.first?.getHeightAnchor() ?? 62).isActive = true
+        purchaseButton.heightAnchor.constraint(equalToConstant: designModel.subscriptionSecond.subscribeButtons.first?.getHeightAnchor() ?? 62).isActive = true
         purchaseButton.bottomAnchor.constraint(equalTo: restoreLabel.topAnchor, constant: -30).isActive = true
     }
 }
@@ -93,7 +93,7 @@ private extension AtakumPaywallViewController {
     }
     
     func findFirstProductIdIfSelected() {
-        for product in designModel.subscription.option.productList {
+        for product in designModel.subscriptionSecond.option.productList {
             if product.isSelected {
                 self.selectedProductId = product.productId
             }
@@ -101,7 +101,7 @@ private extension AtakumPaywallViewController {
     }
     
     func makePurchaseButton() -> UIButton {
-        let button = UIFactory.makePurchaseButton(model: designModel.subscription.subscribeButtons.first)
+        let button = UIFactory.makePurchaseButton(model: designModel.subscriptionSecond.subscribeButtons.first)
         button.addTarget(self, action: #selector(didPurchaseButtonTap), for: .touchUpInside)
         return button
     }
