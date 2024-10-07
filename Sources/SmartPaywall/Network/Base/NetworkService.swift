@@ -54,7 +54,7 @@ public class NetworkService: NetworkProtocol {
                 let decodedResponse = try JSONDecoder().decode(T.self, from: responseData)
                 result(.success(decodedResponse))
             } catch {
-                debugPrint(error.localizedDescription)
+                print(String(describing: error))
                 result(.failure(.invalidData))
             }
         }.resume()

@@ -11,11 +11,11 @@ import Kingfisher
 final class HorizontalSelectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     var didSelect: ((_ productId: String) -> ())?
 
-    private var model: SubscriptionOptionModel
+    private var model: SubscriptionOptionMultiplierModel
     private var priceList: PriceList
     private let cellIdentifier = "ProductSelectionCell"
 
-    init(model: SubscriptionOptionModel, priceList: PriceList) {
+    init(model: SubscriptionOptionMultiplierModel, priceList: PriceList) {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         self.model = model
@@ -33,11 +33,23 @@ final class HorizontalSelectionView: UICollectionView, UICollectionViewDelegate,
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! HorizontalProductSelectionCell
-        let price = priceList[model.productList[indexPath.item].productId]?.localizedPrice ?? ""
+        let product = model.productList[indexPath.row]
+        let price = priceList[product.productId]?.localizedPrice ?? ""
+        
+        let divisionFactor = product.multiplier ?? 1.0
+        let divisionFactor2 = product.multiplier2 ?? 1.0
+        
+        var dividedPriceString = product.subText.replacePrice(with: priceList, multiplier: 1 / divisionFactor)
+        dividedPriceString = dividedPriceString.replacePrice(with: priceList, multiplier: 1 / divisionFactor2)
+        // attributeList'i uygun şekilde oluşturun
+        let attributeList = model.textAttributes ?? []
+        
         cell.configure(with: model.productList[indexPath.item],
                        backgroundColor: model.backgroundColor,
                        selectedColor: model.selectedColor,
-                       priceValue: price)
+                       priceValue: price,
+                       subText: dividedPriceString,
+                       attributeList: attributeList)
         return cell
     }
 
@@ -48,7 +60,7 @@ final class HorizontalSelectionView: UICollectionView, UICollectionViewDelegate,
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        var productList: [SubscriptionProductModel] = []
+        var productList: [SubscriptionMultiplierProductModel] = []
         var selectedProductId = ""
 
         for var (index, product) in model.productList.enumerated() {
@@ -90,7 +102,8 @@ final class HorizontalProductSelectionCell: UICollectionViewCell {
     private lazy var titleStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
-        view.spacing = 2
+        view.distribution = .fillProportionally
+        view.spacing = 5
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -99,15 +112,17 @@ final class HorizontalProductSelectionCell: UICollectionViewCell {
         let label = UILabel()
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = label.font.withSize(16)
+        label.font = .boldSystemFont(ofSize: 18)
+        label.numberOfLines = 0
         return label
     }()
 
-    private lazy var subTitleLabel: UILabel = {
-        let label = UILabel()
+    private lazy var subTitleLabel: AttributedLabel = {
+        let label = AttributedLabel()
         label.textAlignment = .center
         label.textColor = .black
         label.font = label.font.withSize(14)
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -115,8 +130,9 @@ final class HorizontalProductSelectionCell: UICollectionViewCell {
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textColor = .black
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -130,14 +146,16 @@ final class HorizontalProductSelectionCell: UICollectionViewCell {
         super.init(coder: coder)
     }
 
-    func configure(with product: SubscriptionProductModel,
+    func configure(with product: SubscriptionMultiplierProductModel,
                    backgroundColor: String,
                    selectedColor: String,
-                   priceValue: String) {
+                   priceValue: String,
+                   subText: String,
+                   attributeList: [TextAttributeModel]) {
         let selectedColor = UIColor(hex: selectedColor)
         containerView.backgroundColor = UIColor(hex: backgroundColor)
         titleLabel.text = product.productName
-        subTitleLabel.text = product.subText
+        subTitleLabel.set(text: subText, attributeList: attributeList)
         subTitleLabel.isHidden = product.subText.isEmpty
         priceLabel.text = priceValue
         let unSelectedColor = UIColor.lightGray
@@ -153,9 +171,9 @@ private extension HorizontalProductSelectionCell {
         containerView.layer.cornerRadius = 15
         
         addSubview(containerView)
-        containerView.addSubview(titleStackView)
         containerView.addSubview(titleLabel)
-        
+        containerView.addSubview(titleStackView)
+    
         titleStackView.addArrangedSubview(priceLabel)
         titleStackView.addArrangedSubview(subTitleLabel)
         
@@ -166,14 +184,14 @@ private extension HorizontalProductSelectionCell {
             containerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -3),
             containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            titleLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
-            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10),
             titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10),
+            titleLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10),
             
-            titleStackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            titleStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -25),
+            titleStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -15),
             titleStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10),
+            titleStackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             titleStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10)
         ])
     }
