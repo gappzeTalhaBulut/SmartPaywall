@@ -32,24 +32,24 @@ extension String {
     func replacePrice(with list: [String: (String?, String?)], multiplier: Double = 1.0) -> String {
         guard let productId = self.getProductId() else { return self }
         guard let price = list[productId]?.0 else { return self }
+        
         var lastPriceString = price
         
         // Fiyatın içindeki sembolleri belirle, sadece sayısal kısmı ayır
-        let numberCharacters = Set("0123456789.,")
+        let numberCharacters = Set("0123456789,.")
         let currencySymbol = lastPriceString.filter { !numberCharacters.contains($0) }
         let numericPart = lastPriceString.filter { numberCharacters.contains($0) }
-
-        // İlk olarak fiyatın içindeki noktaları temizle, sadece son virgülü koru
-        var cleanedNumericPart = numericPart.replacingOccurrences(of: ".", with: "")
         
-        // Eğer fiyat virgül içeriyorsa nokta ile değiştir
-        cleanedNumericPart = cleanedNumericPart.replacingOccurrences(of: ",", with: ".")
+        // Eğer fiyat virgül içeriyorsa, sayıyı doğru anlamak için önce nokta ayraçlarını kaldır, ondalık virgülü nokta ile değiştir
+        var cleanedNumericPart = numericPart
+            .replacingOccurrences(of: ".", with: "") // Binlik ayracı olarak kullanılan noktaları kaldır
+            .replacingOccurrences(of: ",", with: ".") // Ondalık ayracı virgülü, nokta ile değiştir
         
         // Sayısal kısmı işleme al ve multiplier uygula
         if let lastPrice = Double(cleanedNumericPart) {
             cleanedNumericPart = String(format: "%.2f", lastPrice * multiplier)
         }
-
+        
         // Fiyatı sembolüyle birlikte aynı formatta geri döndür
         if !currencySymbol.isEmpty {
             if price.first?.isNumber == false {
@@ -62,7 +62,7 @@ extension String {
         } else {
             lastPriceString = cleanedNumericPart
         }
-
+        
         // İlk eşleşen productId'yi fiyat ile değiştir
         return self.replaceFirst(of: "{*\(productId)*}", with: "{\(lastPriceString)}")
     }
