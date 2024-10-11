@@ -54,8 +54,9 @@ final class HorizontalSelectionView: UICollectionView, UICollectionViewDelegate,
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.frame.width - 20) / 3 // 3 items in a row with 10pt spacing
-        let height: CGFloat = 130 // You can adjust this based on your content
+        let isSelected = model.productList[indexPath.item].isSelected
+        let width = (collectionView.frame.width - 20) / 3 // Varsayılan genişlik
+        let height: CGFloat = isSelected ? 150 : 130 // Seçili hücre daha büyük olacak
         return CGSize(width: width, height: height)
     }
 
@@ -75,7 +76,7 @@ final class HorizontalSelectionView: UICollectionView, UICollectionViewDelegate,
         }
 
         model.productList = productList
-        reloadData()
+        collectionView.performBatchUpdates(nil)
         didSelect?(selectedProductId)
     }
 }
