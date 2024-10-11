@@ -39,8 +39,11 @@ extension String {
         let currencySymbol = lastPriceString.filter { !numberCharacters.contains($0) }
         let numericPart = lastPriceString.filter { numberCharacters.contains($0) }
 
+        // İlk olarak fiyatın içindeki noktaları temizle, sadece son virgülü koru
+        var cleanedNumericPart = numericPart.replacingOccurrences(of: ".", with: "")
+        
         // Eğer fiyat virgül içeriyorsa nokta ile değiştir
-        var cleanedNumericPart = numericPart.replacingOccurrences(of: ",", with: ".")
+        cleanedNumericPart = cleanedNumericPart.replacingOccurrences(of: ",", with: ".")
         
         // Sayısal kısmı işleme al ve multiplier uygula
         if let lastPrice = Double(cleanedNumericPart) {
@@ -63,7 +66,6 @@ extension String {
         // İlk eşleşen productId'yi fiyat ile değiştir
         return self.replaceFirst(of: "{*\(productId)*}", with: "{\(lastPriceString)}")
     }
-
 }
 
 /*
