@@ -27,6 +27,7 @@ enum PaywallType: String, Decodable {
     case bursa = "bursa"
     case ayder = "ayder"
     case istanbul = "istanbul"
+    case akdeniz = "akdeniz"
     
     func getType() -> DesignObjectProtocol.Type {
         switch self {
@@ -66,6 +67,8 @@ enum PaywallType: String, Decodable {
             return AyderModel.self
         case .istanbul:
             return IstanbulModel.self
+        case .akdeniz:
+            return AkdenizModel.self
         }
     }
 }
