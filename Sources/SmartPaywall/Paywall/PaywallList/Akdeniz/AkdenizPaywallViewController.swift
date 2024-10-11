@@ -10,7 +10,7 @@ import UIKit
 final class AkdenizPaywallViewController: BasePaywallController {
     private lazy var titleLabel = UIFactory.makeLabel(model: designModel.title)
     private lazy var subtitleLabel = UIFactory.makeLabel(model: designModel.subtitle)
-    private lazy var infoListView = UIFactory.makeInfoListView(infoList: designModel.infoList)
+    private lazy var infoListView = UIFactory.makeInfoListViewForAkdeniz(infoList: designModel.infoList)
     private lazy var cancelInfo = UIFactory.makeLabel(model: designModel.cancelInfo)
     
     private lazy var productSelectionView: VerticalProductSelectionViewAkdeniz = {
@@ -82,16 +82,6 @@ final class AkdenizPaywallViewController: BasePaywallController {
 }
 
 private extension AkdenizPaywallViewController {
-    func makeHeaderStackView() -> UIStackView {
-        let stackView = UIStackView()
-        stackView.spacing = 15
-        stackView.axis = .vertical
-        stackView.alignment = .fill
-        stackView.distribution = .fillEqually
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }
-    
     func findFirstProductIdIfSelected() {
         for product in designModel.subscription.option.productList {
             if product.isSelected {

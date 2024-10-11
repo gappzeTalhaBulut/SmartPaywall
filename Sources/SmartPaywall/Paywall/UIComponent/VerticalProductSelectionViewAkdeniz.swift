@@ -157,7 +157,7 @@ final class ProductSelectionCellAkdeniz: UITableViewCell {
         priceLabel.set(text: priceValue, attributeList: attributeList)
         ticketLabel.text = ticketText
         containerView.layer.borderWidth = product.isSelected ? 1.0 : 0
-        containerView.layer.borderColor = product.isSelected ? selectedColor.cgColor : .none
+        containerView.layer.borderColor = product.isSelected ? selectedColor.cgColor : UIColor(hex: "#DDDDDF").cgColor
         selectionStyle = .none
     }
 }
@@ -175,7 +175,7 @@ private extension ProductSelectionCellAkdeniz {
         containerView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         containerView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8).isActive = true
     
-        priceLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20).isActive = true
+        priceLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15).isActive = true
         priceLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
         priceLabel.trailingAnchor.constraint(equalTo: ticketView.leadingAnchor, constant: -10).isActive = true
         

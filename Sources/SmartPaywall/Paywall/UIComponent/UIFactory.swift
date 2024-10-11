@@ -134,6 +134,11 @@ final class UIFactory {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }
+    static func makeInfoListViewForAkdeniz(infoList: [ListElementModel]) -> InfoListViewAkdeniz {
+        let view = InfoListViewAkdeniz(infoList: infoList)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }
     static func makeVerticalInfoListView(infoList: [ListElementModel]) -> InfoVerticalView {
         let view = InfoVerticalView(infoList: infoList)
         view.translatesAutoresizingMaskIntoConstraints = false
