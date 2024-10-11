@@ -32,24 +32,30 @@ extension String {
     func replacePrice(with list: [String: (String?, String?)], multiplier: Double = 1.0) -> String {
         guard let productId = self.getProductId() else { return self }
         guard let price = list[productId]?.0 else { return self }
-        
         var lastPriceString = price
-        
-        // Fiyatın içindeki sembolleri belirle, sadece sayısal kısmı ayır
-        let numberCharacters = Set("0123456789,.")
+
+        // Fiyatın içindeki nokta ve virgül işlemlerini ayarlama
+        if let commaRange = lastPriceString.range(of: ",") {
+            let substringBeforeComma = lastPriceString[..<commaRange.lowerBound]
+            if substringBeforeComma.contains(".") {
+                let cleanedString = substringBeforeComma.replacingOccurrences(of: ".", with: "")
+                lastPriceString = cleanedString + lastPriceString[commaRange.lowerBound...]
+            }
+        }
+
+        // Sayısal kısmı ayıklama
+        let numberCharacters = Set("0123456789.,")
         let currencySymbol = lastPriceString.filter { !numberCharacters.contains($0) }
         let numericPart = lastPriceString.filter { numberCharacters.contains($0) }
         
-        // Eğer fiyat virgül içeriyorsa, sayıyı doğru anlamak için önce nokta ayraçlarını kaldır, ondalık virgülü nokta ile değiştir
-        var cleanedNumericPart = numericPart
-            .replacingOccurrences(of: ".", with: "") // Binlik ayracı olarak kullanılan noktaları kaldır
-            .replacingOccurrences(of: ",", with: ".") // Ondalık ayracı virgülü, nokta ile değiştir
+        // Eğer fiyat virgül içeriyorsa nokta ile değiştir
+        var cleanedNumericPart = numericPart.replacingOccurrences(of: ",", with: ".")
         
         // Sayısal kısmı işleme al ve multiplier uygula
         if let lastPrice = Double(cleanedNumericPart) {
-            cleanedNumericPart = String(format: "%.2f", lastPrice / multiplier)
+            cleanedNumericPart = String(format: "%.2f", lastPrice * multiplier)
         }
-        
+
         // Fiyatı sembolüyle birlikte aynı formatta geri döndür
         if !currencySymbol.isEmpty {
             if price.first?.isNumber == false {
@@ -62,10 +68,11 @@ extension String {
         } else {
             lastPriceString = cleanedNumericPart
         }
-        
+
         // İlk eşleşen productId'yi fiyat ile değiştir
         return self.replaceFirst(of: "{*\(productId)*}", with: "{\(lastPriceString)}")
     }
+
 }
 
 /*
