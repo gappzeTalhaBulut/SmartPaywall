@@ -160,7 +160,7 @@ final class HorizontalProductSelectionCell: UICollectionViewCell {
     
     lazy var ticketView: UIView = {
         let view = UIView()
-        view.layer.cornerRadius = 13
+        view.layer.cornerRadius = 9
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -218,7 +218,7 @@ private extension HorizontalProductSelectionCell {
     
         titleStackView.addArrangedSubview(priceLabel)
         titleStackView.addArrangedSubview(subTitleLabel)
-        
+        bringSubviewToFront(ticketView)
         
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: topAnchor),
