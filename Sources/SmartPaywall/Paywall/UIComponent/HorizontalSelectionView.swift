@@ -210,6 +210,9 @@ private extension HorizontalProductSelectionCell {
         backgroundColor = .clear
         containerView.layer.cornerRadius = 15
         
+        containerView.layer.zPosition = 0
+        ticketView.layer.zPosition = 1
+        
         addSubview(containerView)
         containerView.addSubview(titleLabel)
         containerView.addSubview(titleStackView)
