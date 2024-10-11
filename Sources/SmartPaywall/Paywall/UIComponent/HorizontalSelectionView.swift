@@ -78,9 +78,9 @@ final class HorizontalSelectionView: UICollectionView, UICollectionViewDelegate,
         model.productList = productList
         collectionView.performBatchUpdates {
             // Bu işlemler collectionView'in boyutları güncellenirken yapılır
+            self.didSelect?(selectedProductId)
         } completion: { _ in
             // Güncelleme bittikten sonra seçili ürünü bildir
-            self.didSelect?(selectedProductId)
         }
     }
 }
