@@ -47,6 +47,7 @@ final class AkdenizPaywallViewController: BasePaywallController {
         view.addSubview(subtitleLabel)
         view.addSubview(cancelInfo)
         view.addSubview(productSelectionView)
+        view.addSubview(infoListView)
         view.addSubview(purchaseButton)
         view.addSubview(titleLabel)
         
