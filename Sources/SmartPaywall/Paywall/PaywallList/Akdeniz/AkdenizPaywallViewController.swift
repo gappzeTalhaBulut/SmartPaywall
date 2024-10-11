@@ -67,8 +67,8 @@ final class AkdenizPaywallViewController: BasePaywallController {
         infoListView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20).isActive = true
         infoListView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
         infoListView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40).isActive = true
-        infoListView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.40).isActive = true
-        infoListView.bottomAnchor.constraint(equalTo: cancelInfo.topAnchor, constant: -10).isActive = true
+        infoListView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.30).isActive = true
+       //// infoListView.bottomAnchor.constraint(equalTo: cancelInfo.topAnchor, constant: -10).isActive = true
         
         cancelInfo.bottomAnchor.constraint(equalTo: productSelectionView.topAnchor, constant: -5).isActive = true
         cancelInfo.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
