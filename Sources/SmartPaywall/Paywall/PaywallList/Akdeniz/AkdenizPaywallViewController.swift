@@ -50,7 +50,7 @@ final class AkdenizPaywallViewController: BasePaywallController {
         view.addSubview(purchaseButton)
         view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
-        //view.addSubview(infoListView)
+        view.addSubview(infoListView)
         
         titleLabel.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 10).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
