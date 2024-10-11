@@ -156,8 +156,8 @@ final class ProductSelectionCellAkdeniz: UITableViewCell {
         containerView.backgroundColor = UIColor(hex: backgroundColor)
         priceLabel.set(text: priceValue, attributeList: attributeList)
         ticketLabel.text = ticketText
-        containerView.layer.borderWidth = product.isSelected ? 1.0 : 0
-        containerView.layer.borderColor = product.isSelected ? selectedColor.cgColor : UIColor.lightGray.cgColor
+        containerView.layer.borderWidth = product.isSelected ? 1.0 : 1.0
+        containerView.layer.borderColor = product.isSelected ? selectedColor.cgColor : UIColor(hex: "#DDDDDF").cgColor
         selectionStyle = .none
     }
 }
