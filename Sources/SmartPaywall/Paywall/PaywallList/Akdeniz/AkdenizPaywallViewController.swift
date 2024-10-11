@@ -26,7 +26,6 @@ final class AkdenizPaywallViewController: BasePaywallController {
         let stack = UIStackView()
         stack.addArrangedSubview(titleLabel)
         stack.addArrangedSubview(subtitleLabel)
-        stack.addArrangedSubview(infoListView)
         stack.axis = .vertical
         stack.alignment = .fill
         stack.distribution = .fillProportionally
@@ -59,12 +58,17 @@ final class AkdenizPaywallViewController: BasePaywallController {
         view.addSubview(productSelectionView)
         view.addSubview(purchaseButton)
         view.addSubview(stackView)
+        view.addSubview(infoListView)
         
         stackView.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 10).isActive = true
         stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
         stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40).isActive = true
         stackView.bottomAnchor.constraint(equalTo: cancelInfo.topAnchor, constant: -20).isActive = true
-        //stackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.30).isActive = true
+        
+        infoListView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20).isActive = true
+        infoListView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
+        infoListView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40).isActive = true
+        infoListView.bottomAnchor.constraint(equalTo: cancelInfo.topAnchor, constant: -10).isActive = true
         
         cancelInfo.bottomAnchor.constraint(equalTo: productSelectionView.topAnchor, constant: -5).isActive = true
         cancelInfo.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
