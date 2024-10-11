@@ -58,6 +58,7 @@ final class HorizontalSelectionView: UICollectionView, UICollectionViewDelegate,
             cell.ticketView.isHidden = false
             cell.ticketLabel.isHidden = false
         }
+        bringSubviewToFront(cell.ticketView)
         return cell
     }
 
@@ -221,7 +222,6 @@ private extension HorizontalProductSelectionCell {
     
         titleStackView.addArrangedSubview(priceLabel)
         titleStackView.addArrangedSubview(subTitleLabel)
-        bringSubviewToFront(ticketView)
         
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: topAnchor),
