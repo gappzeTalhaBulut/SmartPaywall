@@ -50,6 +50,14 @@ final class HorizontalSelectionView: UICollectionView, UICollectionViewDelegate,
                        priceValue: price,
                        subText: dividedPriceString,
                        attributeList: attributeList)
+        
+        if model.productList[indexPath.item].ticketValue == "" {
+            cell.ticketView.isHidden = true
+            cell.ticketLabel.isHidden = true
+        } else {
+            cell.ticketView.isHidden = false
+            cell.ticketLabel.isHidden = false
+        }
         return cell
     }
 
@@ -149,6 +157,23 @@ final class HorizontalProductSelectionCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    lazy var ticketView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 13
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    lazy var ticketLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.textColor = .white
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -171,6 +196,8 @@ final class HorizontalProductSelectionCell: UICollectionViewCell {
         subTitleLabel.set(text: subText, attributeList: attributeList)
         subTitleLabel.isHidden = product.subText.isEmpty
         priceLabel.text = priceValue
+        ticketView.backgroundColor = selectedColor
+        ticketLabel.text = product.ticketValue
         let unSelectedColor = UIColor.lightGray
         titleLabel.textColor = selectedColor
         containerView.layer.borderWidth = product.isSelected ? 3.0 : 0.0
@@ -186,6 +213,8 @@ private extension HorizontalProductSelectionCell {
         addSubview(containerView)
         containerView.addSubview(titleLabel)
         containerView.addSubview(titleStackView)
+        containerView.addSubview(ticketView)
+        ticketView.addSubview(ticketLabel)
     
         titleStackView.addArrangedSubview(priceLabel)
         titleStackView.addArrangedSubview(subTitleLabel)
@@ -205,7 +234,15 @@ private extension HorizontalProductSelectionCell {
             titleStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -15),
             titleStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10),
             titleStackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            titleStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10)
+            titleStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10),
+            
+            ticketLabel.topAnchor.constraint(equalTo: ticketView.topAnchor, constant: 2),
+            ticketLabel.leadingAnchor.constraint(equalTo: ticketView.leadingAnchor, constant: 10),
+            ticketLabel.trailingAnchor.constraint(equalTo: ticketView.trailingAnchor, constant: -10),
+            ticketLabel.bottomAnchor.constraint(equalTo: ticketView.bottomAnchor, constant: -2),
+            
+            ticketView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: -10),
+            ticketView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
         ])
     }
 }
