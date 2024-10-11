@@ -76,8 +76,8 @@ final class HorizontalSelectionView: UICollectionView, UICollectionViewDelegate,
         }
 
         model.productList = productList
-        collectionView.performBatchUpdates(nil)
         didSelect?(selectedProductId)
+        collectionView.performBatchUpdates(nil)
     }
 }
 
