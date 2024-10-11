@@ -53,7 +53,7 @@ extension String {
         
         // Sayısal kısmı işleme al ve multiplier uygula
         if let lastPrice = Double(cleanedNumericPart) {
-            cleanedNumericPart = String(format: "%.2f", lastPrice / multiplier)
+            cleanedNumericPart = String(format: "%.2f", lastPrice * multiplier)
         }
 
         // Fiyatı sembolüyle birlikte aynı formatta geri döndür
