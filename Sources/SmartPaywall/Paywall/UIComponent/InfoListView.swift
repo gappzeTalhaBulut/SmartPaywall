@@ -74,8 +74,8 @@ final class InfoListViewAkdeniz: UIStackView {
 final class InfoSingleViewAkdeniz: UIStackView {
     private var infoModel: ListElementModel
     
-    private lazy var infoItemView: InfoItemView = {
-        let itemView = InfoItemView(infoModel: infoModel)
+    private lazy var infoItemView: InfoItemViewAkdeniz = {
+        let itemView = InfoItemViewAkdeniz(infoModel: infoModel)
         return itemView
     }()
     
