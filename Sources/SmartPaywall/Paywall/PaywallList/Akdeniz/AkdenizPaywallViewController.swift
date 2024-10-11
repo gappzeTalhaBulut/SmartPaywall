@@ -29,7 +29,7 @@ final class AkdenizPaywallViewController: BasePaywallController {
         stack.addArrangedSubview(infoListView)
         stack.axis = .vertical
         stack.alignment = .fill
-        stack.distribution = .fillEqually
+        stack.distribution = .fillProportionally
         stack.spacing = 20
         return stack
     }()
@@ -63,7 +63,7 @@ final class AkdenizPaywallViewController: BasePaywallController {
         stackView.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 10).isActive = true
         stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
         stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40).isActive = true
-        stackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.50).isActive = true
+        stackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.30).isActive = true
         
         cancelInfo.bottomAnchor.constraint(equalTo: productSelectionView.topAnchor, constant: -5).isActive = true
         cancelInfo.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
