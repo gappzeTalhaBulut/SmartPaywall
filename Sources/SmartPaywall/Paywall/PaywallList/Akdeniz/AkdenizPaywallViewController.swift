@@ -22,16 +22,7 @@ final class AkdenizPaywallViewController: BasePaywallController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    private lazy var stackView: UIStackView = {
-        let stack = UIStackView()
-        stack.addArrangedSubview(titleLabel)
-        stack.addArrangedSubview(subtitleLabel)
-        stack.axis = .vertical
-        stack.alignment = .fill
-        stack.distribution = .fillProportionally
-        stack.spacing = 20
-        return stack
-    }()
+    
     private lazy var purchaseButton = makePurchaseButton()
     private var selectedProductId = ""
     private let designModel: AkdenizModel
@@ -57,17 +48,22 @@ final class AkdenizPaywallViewController: BasePaywallController {
         view.addSubview(cancelInfo)
         view.addSubview(productSelectionView)
         view.addSubview(purchaseButton)
-        view.addSubview(stackView)
+        view.addSubview(titleLabel)
+        view.addSubview(subtitleLabel)
         //view.addSubview(infoListView)
         
-        stackView.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 10).isActive = true
-        stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 10).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40).isActive = true
+        
+        subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20).isActive = true
+        subtitleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
+        subtitleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40).isActive = true
       
-       //infoListView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20).isActive = true
-       //infoListView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
-       //infoListView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40).isActive = true
-       //infoListView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.30).isActive = true
+       infoListView.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 20).isActive = true
+       infoListView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
+       infoListView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40).isActive = true
+       infoListView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.20).isActive = true
        //// infoListView.bottomAnchor.constraint(equalTo: cancelInfo.topAnchor, constant: -10).isActive = true
         
         cancelInfo.bottomAnchor.constraint(equalTo: productSelectionView.topAnchor, constant: -5).isActive = true
