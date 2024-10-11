@@ -95,6 +95,7 @@ class InfoItemViewAkdeniz: UIView {
             imageView.widthAnchor.constraint(equalToConstant: 40),
 
             infoLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 10),
+            infoLabel.centerYAnchor.constraint(equalTo: imageView.centerYAnchor),
             infoLabel.topAnchor.constraint(equalTo: topAnchor),
             infoLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             infoLabel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor)
