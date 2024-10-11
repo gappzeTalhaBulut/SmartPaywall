@@ -58,7 +58,6 @@ final class HorizontalSelectionView: UICollectionView, UICollectionViewDelegate,
             cell.ticketView.isHidden = false
             cell.ticketLabel.isHidden = false
         }
-        bringSubviewToFront(cell.ticketView)
         return cell
     }
 
@@ -211,14 +210,12 @@ private extension HorizontalProductSelectionCell {
         backgroundColor = .clear
         containerView.layer.cornerRadius = 15
         
-        containerView.layer.zPosition = 0
-        ticketView.layer.zPosition = 1
-        
         addSubview(containerView)
         containerView.addSubview(titleLabel)
         containerView.addSubview(titleStackView)
-        containerView.addSubview(ticketView)
+        addSubview(ticketView)
         ticketView.addSubview(ticketLabel)
+        bringSubviewToFront(ticketView)
     
         titleStackView.addArrangedSubview(priceLabel)
         titleStackView.addArrangedSubview(subTitleLabel)
