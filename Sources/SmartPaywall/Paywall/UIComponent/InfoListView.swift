@@ -63,7 +63,7 @@ final class InfoListViewAkdeniz: UIStackView {
         self.spacing = itemSpacing
         
         for infoModel in infoList {
-            let infoSingleView = InfoSingleView(infoModel: infoModel)
+            let infoSingleView = InfoSingleViewAkdeniz(infoModel: infoModel)
             self.addArrangedSubview(infoSingleView)
         }
     }
