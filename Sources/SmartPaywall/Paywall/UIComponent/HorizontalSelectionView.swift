@@ -55,8 +55,14 @@ final class HorizontalSelectionView: UICollectionView, UICollectionViewDelegate,
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let isSelected = model.productList[indexPath.item].isSelected
-        let width = (collectionView.frame.width - 20) / 3 // Varsayılan genişlik
-        let height: CGFloat = isSelected ? 150 : 130 // Seçili hücre daha büyük olacak
+        var width = (collectionView.frame.width - 20) / 3
+        
+        if isSelected {
+            width += 20
+        }
+        
+        let height: CGFloat = isSelected ? 150 : 130
+        
         return CGSize(width: width, height: height)
     }
 
