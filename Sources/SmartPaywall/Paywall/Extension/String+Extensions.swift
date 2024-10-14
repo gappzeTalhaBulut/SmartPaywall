@@ -33,12 +33,21 @@ extension String {
         guard let productId = self.getProductId() else { return self }
         guard let price = list[productId]?.0 else { return self }
         var lastPriceString = price
-        
-        // Fiyatın içindeki sembolleri belirle, sadece sayısal kısmı ayır
+
+        // Fiyatın içindeki nokta ve virgül işlemlerini ayarlama
+        if let commaRange = lastPriceString.range(of: ",") {
+            let substringBeforeComma = lastPriceString[..<commaRange.lowerBound]
+            if substringBeforeComma.contains(".") {
+                let cleanedString = substringBeforeComma.replacingOccurrences(of: ".", with: "")
+                lastPriceString = cleanedString + lastPriceString[commaRange.lowerBound...]
+            }
+        }
+
+        // Sayısal kısmı ayıklama
         let numberCharacters = Set("0123456789.,")
         let currencySymbol = lastPriceString.filter { !numberCharacters.contains($0) }
         let numericPart = lastPriceString.filter { numberCharacters.contains($0) }
-
+        
         // Eğer fiyat virgül içeriyorsa nokta ile değiştir
         var cleanedNumericPart = numericPart.replacingOccurrences(of: ",", with: ".")
         

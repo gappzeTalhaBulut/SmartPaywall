@@ -67,9 +67,9 @@ struct SubscriptionMultiplierProductModel: Decodable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.productName = try container.decode(String.self, forKey: .productName)
+        self.productName = try container.decodeIfPresent(String.self, forKey: .productName) ?? ""
         self.subText = try container.decodeIfPresent(String.self, forKey: .subText) ?? ""
-        self.productId = try container.decode(String.self, forKey: .productId)
+        self.productId = try container.decodeIfPresent(String.self, forKey: .productId) ?? ""
         self.isSelected = try container.decodeIfPresent(Bool.self, forKey: .isSelected) ?? false
         self.ticketValue = try container.decodeIfPresent(String.self, forKey: .ticketValue) ?? ""
         self.multiplier = try container.decodeIfPresent(Double.self, forKey: .multiplier) ?? 1.0

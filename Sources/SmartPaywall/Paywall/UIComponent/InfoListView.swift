@@ -54,6 +54,51 @@ final class InfoSingleView: UIStackView {
     }
 }
 
+final class InfoListViewAkdeniz: UIStackView {
+    private let itemSpacing: CGFloat = 16
+    
+    init(infoList: [ListElementModel]) {
+        super.init(frame: .zero)
+        self.axis = .vertical
+        self.spacing = itemSpacing
+        
+        for infoModel in infoList {
+            let infoSingleView = InfoSingleViewAkdeniz(infoModel: infoModel)
+            self.addArrangedSubview(infoSingleView)
+        }
+    }
+    
+    required init(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+}
+
+final class InfoSingleViewAkdeniz: UIStackView {
+    private var infoModel: ListElementModel
+    
+    private lazy var infoItemView: InfoItemViewAkdeniz = {
+        let itemView = InfoItemViewAkdeniz(infoModel: infoModel)
+        return itemView
+    }()
+    
+    init(infoModel: ListElementModel) {
+        self.infoModel = infoModel
+        super.init(frame: .zero)
+        self.setupUI()
+    }
+    
+    required init(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    
+    private func setupUI() {
+        self.axis = .horizontal
+        self.spacing = 10
+        self.addArrangedSubview(infoItemView)
+        NSLayoutConstraint.activate([
+            infoItemView.topAnchor.constraint(equalTo: self.topAnchor),
+            infoItemView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            infoItemView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            infoItemView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+        ])
+    }
+}
 
 
 
