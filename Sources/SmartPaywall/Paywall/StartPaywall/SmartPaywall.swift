@@ -64,8 +64,18 @@ public class PaywallService {
     @Published private(set) var isPremiumSubscriber: Bool = false
     private weak var currentPaywallController: (any ControllerType)?
     
-    public static func configure(productIDs: Set<String>) {
-        shared.productIDs = productIDs
+    public static func configure(unique: String, bundle: String, country: String, lang: String, version: String, isTest: Bool, serviceURL: String, serviceToken: String, fallbackProductIDs: Set<String>) async {
+        await shared.getProductIDsFromService(
+            unique: unique,
+            bundle: bundle,
+            country: country,
+            lang: lang,
+            version: version,
+            isTest: isTest,
+            serviceURL: serviceURL,
+            serviceToken: serviceToken,
+            fallbackProductIDs: fallbackProductIDs
+        )
     }
     
     public func initialize() async {
@@ -83,6 +93,32 @@ public class PaywallService {
             }
         } catch {
             print("Failed to load products: \(error)")
+        }
+    }
+    /// Servisten ilgili uygulamaya göre product id leri al
+    private func getProductIDsFromService(unique: String, bundle: String, country: String, lang: String, version: String, isTest: Bool, serviceURL: String, serviceToken: String, fallbackProductIDs: Set<String>) async {
+        let model = ProductsModel(
+            uniqueId: unique,
+            bundle: bundle,
+            country: country,
+            language: lang,
+            version: version,
+            isTest: isTest
+        )
+        await withCheckedContinuation { continuation in
+            self.network.request(route: GetProductsRouter.products(model: model, serviceURL: serviceURL, serviceToken: serviceToken)) { [weak self] (result: Result<ProductResponse, NetworkError>) in
+                guard let self = self else { return }
+                switch result {
+                case .success(let response):
+                    self.productIDs = Set(response.subscriptionProducts)
+                    debugPrint("Products fetched successfully: \(response.subscriptionProducts)")
+                    continuation.resume()
+                case .failure(let error):
+                    self.productIDs = fallbackProductIDs
+                    debugPrint("Error fetching product IDs, using fallback IDs: \(error.localizedDescription)")
+                    continuation.resume()
+                }
+            }
         }
     }
     
@@ -123,8 +159,8 @@ public class PaywallService {
     }
     
     public func makePurchase(productID: String,
-                      onPurchaseSuccess: @escaping (_ purchaseTransactionId: String, _ productId: String) -> (),
-                      onPurchaseFailed: @escaping (_ productCode: String, _ errorCode: String, _ errorDetail: String) -> ()) async throws -> Transaction {
+                             onPurchaseSuccess: @escaping (_ purchaseTransactionId: String, _ productId: String) -> (),
+                             onPurchaseFailed: @escaping (_ productCode: String, _ errorCode: String, _ errorDetail: String) -> ()) async throws -> Transaction {
         guard let product = products.first(where: { $0.id == productID }) else {
             let error = StoreKitError.invalidProductIdentifier(productID: productID)
             onPurchaseFailed(productID, "\(error.code)", error.description)
@@ -324,7 +360,7 @@ public extension PaywallService {
             }
         }
     }
-
+    
     
     func getPaywall(
         couldNotPaywallOpen: @escaping (() -> Void),
@@ -348,7 +384,7 @@ public extension PaywallService {
             }
         }
     }
-
+    
     
     func presentPaywall(view: UIViewController,
                         paywallController: any ControllerType,
@@ -503,14 +539,14 @@ extension PaywallService {
     }
     
     func presentTestPaywall(view: UIViewController,
-                        paywallController: any ControllerType,
-                        model: TestPaywallResponse,
-                        products: [Product],
-                        onOpen: @escaping OnOpenCompletion,
-                        onClose: (() -> ())? = nil,
-                        onPurchaseSuccess: @escaping OnPurchaseSuccess,
-                        onPurchaseFailed: @escaping OnPurchaseFailed,
-                        onRestoreSuccess: @escaping () -> ()) {
+                            paywallController: any ControllerType,
+                            model: TestPaywallResponse,
+                            products: [Product],
+                            onOpen: @escaping OnOpenCompletion,
+                            onClose: (() -> ())? = nil,
+                            onPurchaseSuccess: @escaping OnPurchaseSuccess,
+                            onPurchaseFailed: @escaping OnPurchaseFailed,
+                            onRestoreSuccess: @escaping () -> ()) {
         // TODO: - Completion kapanma, satınalma ve restore durumlarını unutma
         currentPaywallController = paywallController
         
