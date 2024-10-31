@@ -114,8 +114,8 @@ public class PaywallService {
                     debugPrint("Products fetched successfully: \(response.subscriptionProducts)")
                     continuation.resume()
                 case .failure(let error):
-                    debugPrint("Error fetching product IDs, using fallback IDs: \(error)")
                     self.productIDs = fallbackProductIDs
+                    debugPrint("Error fetching product IDs, using fallback IDs: \(error.localizedDescription)")
                     continuation.resume()
                 }
             }
