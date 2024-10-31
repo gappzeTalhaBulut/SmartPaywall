@@ -64,9 +64,17 @@ public class PaywallService {
     @Published private(set) var isPremiumSubscriber: Bool = false
     private weak var currentPaywallController: (any ControllerType)?
     
-    public static func configure(productIDs: Set<String>) {
-        shared.productIDs = productIDs
+    public static func configure(unique: String, bundle: String, country: String, lang: String, version: String, isTest: Bool, serviceURL: String, serviceToken: String, fallbackProductIDs: Set<String>) {
+        Task {
+            await shared.getProductIDsFromService(unique: unique, bundle: bundle, country: country, lang: lang, version: version, isTest: isTest, serviceURL: serviceURL, serviceToken: serviceToken, fallbackProductIDs: fallbackProductIDs)
+        }
     }
+    /*
+     public static func configure(productIDs: Set<String>) {
+         shared.productIDs = productIDs
+     }
+     */
+  
     
     public func initialize() async {
         await startObservingTransactions()
@@ -83,6 +91,32 @@ public class PaywallService {
             }
         } catch {
             print("Failed to load products: \(error)")
+        }
+    }
+    /// Servisten ilgili uygulamaya göre product id leri al
+    private func getProductIDsFromService(unique: String, bundle: String, country: String, lang: String, version: String, isTest: Bool, serviceURL: String, serviceToken: String, fallbackProductIDs: Set<String>) async {
+        let model = ProductsModel(
+            uniqueId: unique,
+            bundle: bundle,
+            country: country,
+            language: lang,
+            version: version,
+            isTest: isTest
+        )
+        await withCheckedContinuation { continuation in
+            self.network.request(route: GetProductsRouter.products(model: model, serviceURL: serviceURL, serviceToken: serviceToken)) { [weak self] (result: Result<ProductResponse, NetworkError>) in
+                guard let self = self else { return }
+                switch result {
+                case .success(let response):
+                    self.productIDs = Set(response.subscriptionProducts)
+                    debugPrint("Products fetched successfully: \(response.subscriptionProducts)")
+                    continuation.resume()
+                case .failure(let error):
+                    debugPrint("Error fetching product IDs, using fallback IDs: \(error)")
+                    self.productIDs = fallbackProductIDs
+                    continuation.resume()
+                }
+            }
         }
     }
     
