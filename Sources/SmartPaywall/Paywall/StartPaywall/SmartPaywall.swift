@@ -64,17 +64,19 @@ public class PaywallService {
     @Published private(set) var isPremiumSubscriber: Bool = false
     private weak var currentPaywallController: (any ControllerType)?
     
-    public static func configure(unique: String, bundle: String, country: String, lang: String, version: String, isTest: Bool, serviceURL: String, serviceToken: String, fallbackProductIDs: Set<String>) {
-        Task {
-            await shared.getProductIDsFromService(unique: unique, bundle: bundle, country: country, lang: lang, version: version, isTest: isTest, serviceURL: serviceURL, serviceToken: serviceToken, fallbackProductIDs: fallbackProductIDs)
-        }
+    public static func configure(unique: String, bundle: String, country: String, lang: String, version: String, isTest: Bool, serviceURL: String, serviceToken: String, fallbackProductIDs: Set<String>) async {
+        await shared.getProductIDsFromService(
+            unique: unique,
+            bundle: bundle,
+            country: country,
+            lang: lang,
+            version: version,
+            isTest: isTest,
+            serviceURL: serviceURL,
+            serviceToken: serviceToken,
+            fallbackProductIDs: fallbackProductIDs
+        )
     }
-    /*
-     public static func configure(productIDs: Set<String>) {
-         shared.productIDs = productIDs
-     }
-     */
-  
     
     public func initialize() async {
         await startObservingTransactions()
@@ -157,8 +159,8 @@ public class PaywallService {
     }
     
     public func makePurchase(productID: String,
-                      onPurchaseSuccess: @escaping (_ purchaseTransactionId: String, _ productId: String) -> (),
-                      onPurchaseFailed: @escaping (_ productCode: String, _ errorCode: String, _ errorDetail: String) -> ()) async throws -> Transaction {
+                             onPurchaseSuccess: @escaping (_ purchaseTransactionId: String, _ productId: String) -> (),
+                             onPurchaseFailed: @escaping (_ productCode: String, _ errorCode: String, _ errorDetail: String) -> ()) async throws -> Transaction {
         guard let product = products.first(where: { $0.id == productID }) else {
             let error = StoreKitError.invalidProductIdentifier(productID: productID)
             onPurchaseFailed(productID, "\(error.code)", error.description)
@@ -358,7 +360,7 @@ public extension PaywallService {
             }
         }
     }
-
+    
     
     func getPaywall(
         couldNotPaywallOpen: @escaping (() -> Void),
@@ -382,7 +384,7 @@ public extension PaywallService {
             }
         }
     }
-
+    
     
     func presentPaywall(view: UIViewController,
                         paywallController: any ControllerType,
@@ -537,14 +539,14 @@ extension PaywallService {
     }
     
     func presentTestPaywall(view: UIViewController,
-                        paywallController: any ControllerType,
-                        model: TestPaywallResponse,
-                        products: [Product],
-                        onOpen: @escaping OnOpenCompletion,
-                        onClose: (() -> ())? = nil,
-                        onPurchaseSuccess: @escaping OnPurchaseSuccess,
-                        onPurchaseFailed: @escaping OnPurchaseFailed,
-                        onRestoreSuccess: @escaping () -> ()) {
+                            paywallController: any ControllerType,
+                            model: TestPaywallResponse,
+                            products: [Product],
+                            onOpen: @escaping OnOpenCompletion,
+                            onClose: (() -> ())? = nil,
+                            onPurchaseSuccess: @escaping OnPurchaseSuccess,
+                            onPurchaseFailed: @escaping OnPurchaseFailed,
+                            onRestoreSuccess: @escaping () -> ()) {
         // TODO: - Completion kapanma, satınalma ve restore durumlarını unutma
         currentPaywallController = paywallController
         
