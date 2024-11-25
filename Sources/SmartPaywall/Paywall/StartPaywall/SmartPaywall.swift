@@ -44,7 +44,7 @@ public enum StoreKitError: Error {
 }
 
 public typealias Transaction = StoreKit.Transaction
-public typealias OnOpenCompletion = (_ paywallId: Int, _ isABTest: Bool, _ abTestName: String) -> ()
+public typealias OnOpenCompletion = (_ paywallId: Int, _ isABTest: Bool, _ abTestName: String, _ paywallName: String) -> ()
 public typealias notCloseCompletion = (_ placementID: Int, _ isABTest: Bool, _ errorText: String) -> ()
 public typealias OnPurchaseSuccess = (_ purchaseTransactionId: String, _ paywallId: Int, _ productId: String, _ isABTest: Bool, _ abTestName: String) -> ()
 public typealias OnPurchaseFailed = (_ paywallId: Int, _ isABTest: Bool, _ abTestName: String, _ productCode: String, _ errorCode: String, _ errorDetail: String) -> ()
@@ -400,7 +400,7 @@ public extension PaywallService {
         
         currentPaywallController?.onOpen = {
             /// Açılan paywall ' un ABTest olup olmadğını anlamak için ab test adının paywall isminden farklı olmasına bakıyoruz.
-            onOpen(model.paywallId, model.ABTestName != model.paywallName, model.ABTestName)
+            onOpen(model.paywallId, model.ABTestName != model.paywallName, model.ABTestName, model.paywallName ?? "")
         }
         
         currentPaywallController?.onClose = {
