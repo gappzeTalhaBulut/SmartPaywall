@@ -55,10 +55,10 @@ public class NetworkService: NetworkProtocol {
                 result(.success(decodedResponse))
             } catch {
                 if let decodingError = error as? DecodingError {
-                    let formattedError = "Decoding Error:\n\(decodingError.formattedDescription)"
+                    let formattedError = "Decoding Error: \(decodingError.formattedDescription)"
                     result(.failure(.invalidData(String(describing: formattedError))))
                 } else {
-                    let errorDescription = "Unknown Error:\n\(error.localizedDescription)"
+                    let errorDescription = "Unknown Error: \(error.localizedDescription)"
                     result(.failure(.invalidData(String(describing: errorDescription))))
                 }
             }
