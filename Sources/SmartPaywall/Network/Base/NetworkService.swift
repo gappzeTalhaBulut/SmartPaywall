@@ -44,7 +44,7 @@ public class NetworkService: NetworkProtocol {
             }
             
             guard let responseData = data else {
-                result(.failure(.invalidData))
+                result(.failure(.invalidData("")))
                 return
             }
             
@@ -55,7 +55,7 @@ public class NetworkService: NetworkProtocol {
                 result(.success(decodedResponse))
             } catch {
                 print(String(describing: error))
-                result(.failure(.invalidData))
+                result(.failure(.invalidData(String(describing: error))))
             }
         }.resume()
     }

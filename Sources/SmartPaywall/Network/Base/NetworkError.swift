@@ -11,5 +11,5 @@ public enum NetworkError: Error, Equatable {
     case invalidUrl
     case requestFailed
     case invalidResponse
-    case invalidData
+    case invalidData(String)
 }
