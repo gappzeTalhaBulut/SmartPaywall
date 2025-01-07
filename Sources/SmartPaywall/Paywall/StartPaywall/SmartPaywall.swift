@@ -532,7 +532,7 @@ extension PaywallService {
                     onRestoreSuccess: onRestoreSuccess
                 )
             case .failure(let error):
-                couldNotOpenPaywall(parameters.paywallId, false, error.localizedDescription)
+                couldNotOpenPaywall(parameters.paywallId, false, "\(error)")
                 print(error)
             }
         }

@@ -15,7 +15,7 @@ final class DegePaywallViewController: BasePaywallController {
                                                                priceList: self.priceList)
     private lazy var purchaseButton = makePurchaseButton()
     private lazy var cancelInfoLabel = UIFactory.makeLabel(model: designModel.cancelInfo)
-    
+
     private let designModel: DegeModel
     
     init(designModel: DegeModel,
@@ -32,7 +32,6 @@ final class DegePaywallViewController: BasePaywallController {
         }
     }
     
-    
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
     override func setupUI() {
@@ -45,6 +44,8 @@ final class DegePaywallViewController: BasePaywallController {
         view.addSubview(cancelInfoLabel)
         
         titleLabel.bottomAnchor.constraint(equalTo: listView.topAnchor, constant: -40).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10).isActive = true
         titleLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
         
         listView.bottomAnchor.constraint(equalTo: trialInfoLabel.bottomAnchor, constant: -50).isActive = true
